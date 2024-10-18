@@ -6,7 +6,9 @@ import kz.djdegens.academic.repositories.QuizRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.NoSuchElementException;
 import java.util.Objects;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -18,5 +20,13 @@ public class QuizDataImpl implements QuizData {
     public Quiz save(Quiz quiz) {
         if(Objects.isNull(quiz))throw new IllegalArgumentException("Quiz can not be null");
         return quizRepository.save(quiz);
+    }
+
+    @Override
+    public Quiz findById(Long quizId) {
+        if(Objects.isNull(quizId))throw new IllegalArgumentException("Quiz id can not be null");
+        Optional<Quiz> optionalQuiz = quizRepository.findById(quizId);
+        if(optionalQuiz.isEmpty())throw new NoSuchElementException("Quiz not found");
+        return optionalQuiz.get();
     }
 }

@@ -24,7 +24,7 @@ public class Quiz {
     private Integer pointsToPass;
 
     @ManyToOne
-    @JoinColumn(name = "lesson_id")
-    private Lesson lesson;
+    @JoinColumn(name = "quiz_id")
+    private Quiz quiz;
 
 }
