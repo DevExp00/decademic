@@ -32,6 +32,9 @@ public class Lesson {
     @Column(name = "points_to_pass")
     private Integer pointsToPass;
 
+    @Column(name = "description")
+    private String description;
+
     @ManyToOne
     @JoinColumn(name = "module_id")
     private Module module;

@@ -6,4 +6,6 @@ import kz.djdegens.academic.entities.Course;
 public interface CourseData {
 
     Course save(Course course);
+
+    Course findById(Long courseId);
 }
