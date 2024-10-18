@@ -6,7 +6,9 @@ import kz.djdegens.academic.repositories.QuestionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.NoSuchElementException;
 import java.util.Objects;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -17,5 +19,13 @@ public class QuestionDataImpl implements QuestionData {
     public Question save(Question question) {
         if(Objects.isNull(question))throw new IllegalArgumentException("Question can not be null");
         return questionRepository.save(question);
+    }
+
+    @Override
+    public Question findById(Long questionId) {
+        if(Objects.isNull(questionId))throw new IllegalArgumentException("Question id can not be null");
+        Optional<Question> optionalQuestion = questionRepository.findById(questionId);
+        if(optionalQuestion.isEmpty())throw new NoSuchElementException("Question not found");
+        return optionalQuestion.get();
     }
 }
