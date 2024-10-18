@@ -18,13 +18,20 @@ public class UserServiceImpl implements UserService {
     private final UserMapper userMapper;
     private final UserData userData;
     @Override
-    public void addUser(UserDto userDto) {
+    public ApplicationDto addUser(UserDto userDto) {
         if(Objects.isNull(userDto))throw new IllegalArgumentException("User dto can not be null");
         if(Objects.isNull(userDto.getLogin())) throw new IllegalArgumentException("User login can not be null");
         User user = userData.findByLogin(userDto.getLogin());
         if(Objects.isNull(user)){
-            userData.save(userMapper.dtoToEntity(userDto));
+            user = userData.save(userMapper.dtoToEntity(userDto));
+        }else {
+            user = userData.save(userMapper.dtoToEntity(user, userDto));
         }
+        return ApplicationDto.builder()
+                .user(UserDto.builder()
+                        .id(user.getId())
+                        .build())
+                .build();
     }
 
     @Override

@@ -5,12 +5,13 @@ import lombok.Data;
 
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class CourseDto {
+public class QuizDto {
 
     private String title;
-    private String description;
-    private Long creatorId;
+
     private String pointsToPass;
-    private Integer price;
-    private Integer rate;
+
+    private Integer order;
+
+    private Long lessonId;
 }

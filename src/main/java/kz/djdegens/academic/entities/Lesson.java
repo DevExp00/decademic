@@ -20,7 +20,7 @@ public class Lesson {
     @Column(name = "title")
     private String title;
 
-    @Column(name = "content")
+    @Column(name = "content", length = 5000)
     private String content;
 
     @Column(name = "content_type")

@@ -15,16 +15,10 @@ public class UserController {
 
     private final UserService userService;
 
-    @PostMapping("/user")
+    @PostMapping("/check-user")
     public ResponseEntity<ApplicationDto> addUser(@RequestBody UserDto userDto){
         try{
-            userService.addUser(userDto);
-            return ResponseEntity.ok().body(ApplicationDto.builder()
-                            .result(ResultDto.builder()
-                                    .status("200")
-                                    .message("User checked successfully")
-                                    .build())
-                    .build());
+            return ResponseEntity.ok().body(userService.addUser(userDto));
         }catch (Exception e){
             return ResponseEntity.internalServerError().body(ApplicationDto.builder()
                             .result(ResultDto.builder()

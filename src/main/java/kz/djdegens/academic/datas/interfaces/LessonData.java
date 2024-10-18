@@ -5,4 +5,6 @@ import kz.djdegens.academic.entities.Lesson;
 public interface LessonData {
 
     Lesson save(Lesson lesson);
+
+    Lesson findById(Long lessonId);
 }

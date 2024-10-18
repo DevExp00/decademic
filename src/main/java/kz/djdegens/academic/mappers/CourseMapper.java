@@ -18,6 +18,7 @@ public class CourseMapper {
         course.setDescription(courseDto.getDescription() == null ? null : courseDto.getDescription());
         course.setCreator(user);
         course.setPointsToPass(courseDto.getPointsToPass() == null ? null : Integer.valueOf(courseDto.getPointsToPass()));
+        course.setPrice(courseDto.getPrice() == null ? null : courseDto.getPrice());
         return course;
     }
 }

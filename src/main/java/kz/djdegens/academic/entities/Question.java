@@ -25,4 +25,8 @@ public class Question {
 
     @Column(name = "is_multiple")
     private Boolean isMultiple;
+
+    @ManyToOne
+    @JoinColumn(name = "quiz_id")
+    private Quiz quiz;
 }

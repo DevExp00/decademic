@@ -38,4 +38,10 @@ public class Course {
 
     @Column(name = "points_to_pass")
     private Integer pointsToPass;
+
+    @Column(name = "price")
+    private Integer price;
+
+    @Column(name = "rate")
+    private Integer rate;
 }
