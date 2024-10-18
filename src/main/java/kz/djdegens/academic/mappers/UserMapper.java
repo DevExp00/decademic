@@ -32,6 +32,7 @@ public class UserMapper {
     public UserDto entityToDto(User user){
         if(Objects.isNull(user))throw new IllegalArgumentException("User can not be null");
         UserDto userDto = new UserDto();
+        userDto.setId(user.getId());
         userDto.setFirstName(user.getFirstName() == null ? null : user.getFirstName());
         userDto.setLastName(user.getLastName() == null ? null : user.getLastName());
         userDto.setLogin(user.getLogin() == null ? null : user.getLogin());

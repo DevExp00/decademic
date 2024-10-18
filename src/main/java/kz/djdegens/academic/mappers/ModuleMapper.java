@@ -5,6 +5,8 @@ import kz.djdegens.academic.entities.Course;
 import kz.djdegens.academic.entities.Module;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Component
@@ -20,5 +22,30 @@ public class ModuleMapper {
         module.setPointsToPass(moduleDto.getPointsToPass() == null ? null : moduleDto.getPointsToPass());
         module.setOrder(moduleDto.getOrderBy() == null ? null : moduleDto.getOrderBy());
         return module;
+    }
+
+    public ModuleDto entityToDto(Module module){
+        if(Objects.isNull(module))throw new IllegalArgumentException("Module can not be null");
+        ModuleDto moduleDto = new ModuleDto();
+        moduleDto.setId(module.getId());
+        moduleDto.setTitle(module.getTitle() == null ? null : module.getTitle());
+        moduleDto.setDescription(module.getDescription() == null ? null : module.getDescription());
+        moduleDto.setPointsToPass(module.getPointsToPass() == null ? null : module.getPointsToPass());
+        moduleDto.setOrderBy(module.getOrder() == null ? null : module.getOrder());
+        return moduleDto;
+    }
+
+    public List<ModuleDto> entityToDto(List<Module> modules){
+        List<ModuleDto> moduleDtos = new ArrayList<>();
+        for(Module module : modules){
+            ModuleDto moduleDto = new ModuleDto();
+            moduleDto.setId(module.getId());
+            moduleDto.setTitle(module.getTitle() == null ? null : module.getTitle());
+            moduleDto.setDescription(module.getDescription() == null ? null : module.getDescription());
+            moduleDto.setPointsToPass(module.getPointsToPass() == null ? null : module.getPointsToPass());
+            moduleDto.setOrderBy(module.getOrder() == null ? null : module.getOrder());
+            moduleDtos.add(moduleDto);
+        }
+        return moduleDtos;
     }
 }

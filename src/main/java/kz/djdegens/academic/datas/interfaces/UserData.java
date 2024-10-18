@@ -8,5 +8,7 @@ public interface UserData {
 
     User findByLogin(String login);
 
+    User findByLoginAndRole(String login, String role);
+
     User findById(Long userId);
 }

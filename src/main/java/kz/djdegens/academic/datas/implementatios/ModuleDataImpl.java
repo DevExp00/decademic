@@ -6,6 +6,7 @@ import kz.djdegens.academic.repositories.ModuleRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.Optional;
@@ -29,5 +30,11 @@ public class ModuleDataImpl implements ModuleData {
         Optional<Module> optionalModule = moduleRepository.findById(moduleId);
         if(optionalModule.isEmpty())throw new NoSuchElementException("Module not found");
         return optionalModule.get();
+    }
+
+    @Override
+    public List<Module> findAllByCourseId(Long courseId) {
+        if(Objects.isNull(courseId))throw new IllegalArgumentException("Course id can not be null");
+        return moduleRepository.findAllByCourseId(courseId);
     }
 }

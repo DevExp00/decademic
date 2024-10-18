@@ -5,7 +5,8 @@ import kz.djdegens.academic.dtos.UserDto;
 
 public interface UserService {
 
-    ApplicationDto addUser(UserDto userDto);
+    ApplicationDto checkUser(UserDto userDto);
+
 
     ApplicationDto getUser(Long userId);
 }

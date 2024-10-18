@@ -21,4 +21,14 @@ public class CourseMapper {
         course.setPrice(courseDto.getPrice() == null ? null : courseDto.getPrice());
         return course;
     }
+
+    public CourseDto entityToDto(Course course){
+        if(Objects.isNull(course))throw new IllegalArgumentException("Course can not be null");
+        return CourseDto.builder()
+                .id(course.getId())
+                .title(course.getTitle() == null ? null : course.getTitle())
+                .description(course.getDescription() == null ? null : course.getDescription())
+                .pointsToPass(String.valueOf(course.getPointsToPass()) == null ? null : String.valueOf(course.getPointsToPass()))
+                .build();
+    }
 }

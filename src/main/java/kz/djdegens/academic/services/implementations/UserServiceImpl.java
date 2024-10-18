@@ -18,10 +18,11 @@ public class UserServiceImpl implements UserService {
     private final UserMapper userMapper;
     private final UserData userData;
     @Override
-    public ApplicationDto addUser(UserDto userDto) {
-        if(Objects.isNull(userDto))throw new IllegalArgumentException("User dto can not be null");
-        if(Objects.isNull(userDto.getLogin())) throw new IllegalArgumentException("User login can not be null");
-        User user = userData.findByLogin(userDto.getLogin());
+    public ApplicationDto checkUser(UserDto userDto) {
+        if(Objects.isNull(userDto))throw new IllegalArgumentException("Student dto can not be null");
+        if(Objects.isNull(userDto.getLogin())) throw new IllegalArgumentException("Student login can not be null");
+        if(Objects.isNull(userDto.getRole()))throw new IllegalArgumentException("Role can not be null");
+        User user = userData.findByLoginAndRole(userDto.getLogin(), userDto.getRole());
         if(Objects.isNull(user)){
             user = userData.save(userMapper.dtoToEntity(userDto));
         }else {
