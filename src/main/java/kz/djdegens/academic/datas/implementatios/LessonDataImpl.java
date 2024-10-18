@@ -6,7 +6,9 @@ import kz.djdegens.academic.repositories.LessonRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.NoSuchElementException;
 import java.util.Objects;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -17,5 +19,13 @@ public class LessonDataImpl implements LessonData {
     public Lesson save(Lesson lesson) {
         if(Objects.isNull(lesson))throw new IllegalArgumentException("Lesson can not be null");
         return lessonRepository.save(lesson);
+    }
+
+    @Override
+    public Lesson findById(Long lessonId) {
+        if(Objects.isNull(lessonId))throw new IllegalArgumentException("Lesson id can not be null");
+        Optional<Lesson> optionalLesson = lessonRepository.findById(lessonId);
+        if(optionalLesson.isEmpty())throw new NoSuchElementException("Lesson not found");
+        return optionalLesson.get();
     }
 }
