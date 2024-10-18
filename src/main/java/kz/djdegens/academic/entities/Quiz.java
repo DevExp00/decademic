@@ -23,8 +23,11 @@ public class Quiz {
     @Column(name = "points_to_pass")
     private Integer pointsToPass;
 
+    @Column(name = "order_by")
+    private Integer order;
+
     @ManyToOne
-    @JoinColumn(name = "quiz_id")
-    private Quiz quiz;
+    @JoinColumn(name = "lesson_id")
+    private Lesson lesson;
 
 }

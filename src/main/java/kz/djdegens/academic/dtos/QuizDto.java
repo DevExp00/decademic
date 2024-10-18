@@ -11,5 +11,7 @@ public class QuizDto {
 
     private String pointsToPass;
 
+    private Integer order;
+
     private Long lessonId;
 }

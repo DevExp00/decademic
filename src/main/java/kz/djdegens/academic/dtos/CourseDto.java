@@ -11,4 +11,6 @@ public class CourseDto {
     private String description;
     private Long creatorId;
     private String pointsToPass;
+    private Integer price;
+    private Integer rate;
 }

@@ -20,7 +20,7 @@ public class LessonMapper {
         lesson.setContentType(lessonDto.getContentType() == null ? null : lessonDto.getContentType());
         lesson.setContent(lessonDto.getContent() == null ? null : lessonDto.getContent());
         lesson.setOrder(lessonDto.getOrder() == null ? null : lessonDto.getOrder());
-        lessonDto.setPointsToPass(lessonDto.getPointsToPass() == null ? null : lessonDto.getPointsToPass());
+        lesson.setPointsToPass(lessonDto.getPointsToPass() == null ? null : lessonDto.getPointsToPass());
         return lesson;
     }
 }

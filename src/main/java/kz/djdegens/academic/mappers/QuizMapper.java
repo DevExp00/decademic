@@ -16,6 +16,7 @@ public class QuizMapper {
         Quiz quiz = new Quiz();
         quiz.setTitle(quizDto.getTitle() == null ? null : quizDto.getTitle());
         quiz.setLesson(lesson);
+        quiz.setOrder(quizDto.getOrder()==null ? null : quizDto.getOrder());
         quiz.setPointsToPass(quizDto.getPointsToPass() == null ? null : Integer.valueOf(quizDto.getPointsToPass()));
         return quiz;
     }

@@ -19,6 +19,16 @@ public class UserMapper {
         return user;
     }
 
+    public User dtoToEntity(User user ,UserDto userDto){
+        if(Objects.isNull(userDto))throw new IllegalArgumentException("User dto can not be null");
+        if(Objects.isNull(user))throw new IllegalArgumentException("User can not be null");
+        user.setFirstName(userDto.getFirstName() == null ? null : userDto.getFirstName());
+        user.setLastName(userDto.getLastName() == null ? null : userDto.getLastName());
+        user.setLogin(userDto.getLogin() == null ? null : userDto.getLogin());
+        user.setRole(userDto.getRole() == null ? null : userDto.getRole());
+        return user;
+    }
+
     public UserDto entityToDto(User user){
         if(Objects.isNull(user))throw new IllegalArgumentException("User can not be null");
         UserDto userDto = new UserDto();
