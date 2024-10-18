@@ -11,7 +11,7 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "lesson_completion")
+@Table(name = "dc_lesson_completion")
 public class ModuleCompletion {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

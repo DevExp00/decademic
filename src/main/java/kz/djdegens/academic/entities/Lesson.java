@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "lesson")
+@Table(name = "dc_lesson")
 public class Lesson {
 
     @Id
@@ -26,7 +26,7 @@ public class Lesson {
     @Column(name = "content_type")
     private String contentType;
 
-    @Column(name = "order")
+    @Column(name = "order_by")
     private Integer order;
 
     @Column(name = "points_to_pass")

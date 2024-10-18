@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "module")
+@Table(name = "dc_module")
 public class Module {
 
     @Id
@@ -23,7 +23,7 @@ public class Module {
     @Column(name = "description")
     private String description;
 
-    @Column(name = "order")
+    @Column(name = "order_by")
     private Integer order;
 
     @Column(name = "points_to_pass")

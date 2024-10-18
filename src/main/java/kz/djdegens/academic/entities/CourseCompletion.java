@@ -11,7 +11,7 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "course_completion")
+@Table(name = "dc_course_completion")
 public class CourseCompletion {
 
     @Id
