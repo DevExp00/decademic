@@ -35,6 +35,20 @@ public class LessonController {
         }
     }
 
+    @GetMapping("/{lessonId}")
+    public ResponseEntity<ApplicationDto> getLesson(@PathVariable Long lessonId){
+        try{
+            return ResponseEntity.ok(lessonService.getLesson(lessonId));
+        }catch (Exception e){
+            return ResponseEntity.internalServerError().body(ApplicationDto.builder()
+                    .result(ResultDto.builder()
+                            .message(e.getLocalizedMessage())
+                            .status("500")
+                            .build())
+                    .build());
+        }
+    }
+
     @PostMapping("/{lessonId}/attempt")
     public ResponseEntity<ApplicationDto> startAttempt(@PathVariable Long lessonId,
                                                        @RequestBody ApplicationDto applicationDto){

@@ -11,4 +11,7 @@ public interface LessonService {
     void startAttempt(Long lessonId, ApplicationDto applicationDto);
 
     void handleLessonCompletion(QuizCompletion quizCompletion);
+
+    ApplicationDto getLesson(Long lessonId);
+
 }

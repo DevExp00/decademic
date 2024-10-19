@@ -55,4 +55,18 @@ public class QuizController {
                     .build());
         }
     }
+
+    @GetMapping("/{quizId}")
+    public ResponseEntity<ApplicationDto> getQuiz(@PathVariable Long quizId){
+        try{
+            return ResponseEntity.ok(quizService.getQuiz(quizId));
+        }catch (Exception e){
+            return ResponseEntity.internalServerError().body(ApplicationDto.builder()
+                    .result(ResultDto.builder()
+                            .message(e.getLocalizedMessage())
+                            .status("500")
+                            .build())
+                    .build());
+        }
+    }
 }

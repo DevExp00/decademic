@@ -10,4 +10,6 @@ public interface QuizData {
 
     Quiz findById(Long quizId);
 
+    List<Quiz> findAllByLessonId(Long lessonId);
+
 }

@@ -8,4 +8,6 @@ public interface QuizService {
     void addQuiz(QuizDto quizDto);
 
     void startAttempt(Long quizId, ApplicationDto applicationDto);
+
+    ApplicationDto getQuiz(Long quizId);
 }

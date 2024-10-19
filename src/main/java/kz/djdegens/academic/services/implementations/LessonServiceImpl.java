@@ -3,12 +3,11 @@ package kz.djdegens.academic.services.implementations;
 import kz.djdegens.academic.datas.interfaces.*;
 import kz.djdegens.academic.dtos.ApplicationDto;
 import kz.djdegens.academic.dtos.LessonDto;
-import kz.djdegens.academic.entities.LessonCompletion;
+import kz.djdegens.academic.entities.*;
 import kz.djdegens.academic.entities.Module;
-import kz.djdegens.academic.entities.QuizCompletion;
-import kz.djdegens.academic.entities.User;
 import kz.djdegens.academic.mappers.LessonMapper;
 import kz.djdegens.academic.mappers.ModuleMapper;
+import kz.djdegens.academic.mappers.QuizMapper;
 import kz.djdegens.academic.services.interfaces.LessonService;
 import kz.djdegens.academic.services.interfaces.ModuleService;
 import lombok.RequiredArgsConstructor;
@@ -29,8 +28,9 @@ public class LessonServiceImpl implements LessonService {
     private final UserData userData;
     private final ModuleCompletionData moduleCompletionData;
     private final LessonCompletionData lessonCompletionData;
-    private final QuizCompletionData quizCompletionData;
     private final ModuleService moduleService;
+    private final QuizMapper quizMapper;
+    private final QuizData quizData;
 
     @Override
     public void addLesson(LessonDto lessonDto) {
@@ -67,5 +67,14 @@ public class LessonServiceImpl implements LessonService {
             lessonCompletionData.save(lessonCompletion);
             moduleService.handleModuleCompletion(lessonCompletion);
         }
+    }
+
+    @Override
+    public ApplicationDto getLesson(Long lessonId) {
+        Lesson lesson = lessonData.findById(lessonId);
+        return ApplicationDto.builder()
+                .lesson(lessonMapper.entityToDto(lesson))
+                .quizzes(quizMapper.entityToDto(quizData.findAllByLessonId(lesson.getId())))
+                .build();
     }
 }
