@@ -22,7 +22,7 @@ public class UserServiceImpl implements UserService {
         if(Objects.isNull(userDto))throw new IllegalArgumentException("Student dto can not be null");
         if(Objects.isNull(userDto.getLogin())) throw new IllegalArgumentException("Student login can not be null");
         if(Objects.isNull(userDto.getRole()))throw new IllegalArgumentException("Role can not be null");
-        User user = userData.findByLoginAndRole(userDto.getLogin(), userDto.getRole());
+        User user = userData.findByTelegramIdAndRole(userDto.getTelegramId(), userDto.getRole());
         if(Objects.isNull(user)){
             user = userData.save(userMapper.dtoToEntity(userDto));
         }else {
