@@ -27,6 +27,7 @@ public class ApplicationDto {
     private ModuleCompletionDto moduleCompletion;
     private LessonCompletionDto lessonCompletion;
     private QuizCompletionDto quizCompletion;
+    private TeamDto teamDto;
 
     private List<CourseDto> courses;
     private List<ModuleDto> modules;

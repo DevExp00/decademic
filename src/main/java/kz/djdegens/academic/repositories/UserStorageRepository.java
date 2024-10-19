@@ -1,16 +1,13 @@
 package kz.djdegens.academic.repositories;
 
-import kz.djdegens.academic.entities.Module;
+import kz.djdegens.academic.entities.UserStorage;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-
 @Repository
-public interface ModuleRepository extends JpaRepository<Module, Long> {
+public interface UserStorageRepository extends JpaRepository<UserStorage , Long> {
 
-    List<Module> findAllByCourseId(Long courseId);
+    UserStorage findByCourseIdAndStudentId(Long courseId, Long studentId);
 
     Integer countAllByCourseId(Long courseId);
-
 }

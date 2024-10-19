@@ -69,6 +69,27 @@ public class CourseController {
         }
     }
 
+    @PostMapping("/{courseId}/buy")
+    public ResponseEntity<ApplicationDto> buyCourse(@PathVariable Long courseId,
+                                                    @RequestBody ApplicationDto applicationDto){
+        try{
+
+            return ResponseEntity.ok().body(ApplicationDto.builder()
+                    .result(ResultDto.builder()
+                            .status("200")
+                            .message("Course bought successfully")
+                            .build())
+                    .build());
+        }catch (Exception e){
+            return ResponseEntity.internalServerError().body(ApplicationDto.builder()
+                    .result(ResultDto.builder()
+                            .message(e.getLocalizedMessage())
+                            .status("500")
+                            .build())
+                    .build());
+        }
+    }
+
     @GetMapping("/")
     public ResponseEntity<ApplicationDto> getCourses(){
         try{

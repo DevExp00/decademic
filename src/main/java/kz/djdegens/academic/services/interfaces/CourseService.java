@@ -10,6 +10,8 @@ public interface CourseService {
 
     ApplicationDto getCourse(Long courseId);
 
+    void buyCourse(Long courseId, ApplicationDto applicationDto);
+
     void startAttempt(Long courseId,ApplicationDto applicationDto);
 
     void handleCourseCompletion(ModuleCompletion moduleCompletion);

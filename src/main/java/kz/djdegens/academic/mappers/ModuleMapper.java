@@ -1,5 +1,6 @@
 package kz.djdegens.academic.mappers;
 
+import kz.djdegens.academic.dtos.LessonDto;
 import kz.djdegens.academic.dtos.ModuleDto;
 import kz.djdegens.academic.entities.Course;
 import kz.djdegens.academic.entities.Module;
@@ -47,5 +48,16 @@ public class ModuleMapper {
             moduleDtos.add(moduleDto);
         }
         return moduleDtos;
+    }
+
+    public ModuleDto entityToDto(Module module, List<LessonDto> lessonDtos){
+            ModuleDto moduleDto = new ModuleDto();
+            moduleDto.setId(module.getId());
+            moduleDto.setTitle(module.getTitle() == null ? null : module.getTitle());
+            moduleDto.setDescription(module.getDescription() == null ? null : module.getDescription());
+            moduleDto.setPointsToPass(module.getPointsToPass() == null ? null : module.getPointsToPass());
+            moduleDto.setOrderBy(module.getOrder() == null ? null : module.getOrder());
+            moduleDto.setLessons(lessonDtos);
+        return moduleDto;
     }
 }

@@ -37,4 +37,10 @@ public class ModuleDataImpl implements ModuleData {
         if(Objects.isNull(courseId))throw new IllegalArgumentException("Course id can not be null");
         return moduleRepository.findAllByCourseId(courseId);
     }
+
+    @Override
+    public Integer countAllByCourseId(Long courseId) {
+        if(Objects.isNull(courseId))throw new IllegalArgumentException("Course id can not be null");
+        return moduleRepository.countAllByCourseId(courseId);
+    }
 }
