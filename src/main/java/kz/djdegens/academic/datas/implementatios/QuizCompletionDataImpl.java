@@ -30,4 +30,11 @@ public class QuizCompletionDataImpl implements QuizCompletionData {
         if(optionalQuizCompletion.isEmpty())throw new NoSuchElementException("Quiz completion not found");
         return optionalQuizCompletion.get();
     }
+
+    @Override
+    public QuizCompletion findByQuizIdAndUserId(Long quizId, Long userId) {
+        if(Objects.isNull(quizId))throw new IllegalArgumentException("Quiz id can not be null");
+        if(Objects.isNull(userId))throw new IllegalArgumentException("User id can not be null");
+        return quizCompletionRepository.findByQuizIdAndUserId(quizId,userId);
+    }
 }

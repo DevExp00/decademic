@@ -19,4 +19,10 @@ public class AnswerDataImpl implements AnswerData {
         if(Objects.isNull(answer))throw new IllegalArgumentException("Answer can not be null");
         return answerRepository.save(answer);
     }
+
+    @Override
+    public Answer findCorrectAnswerByQuestionId(Long questionId) {
+        if(Objects.isNull(questionId))throw new IllegalArgumentException("Question id can not be null");
+        return answerRepository.findByQuestionIdAndIsCorrect(questionId, true);
+    }
 }
