@@ -1,6 +1,7 @@
 package kz.djdegens.academic.services.implementations;
 
 import kz.djdegens.academic.datas.interfaces.*;
+import kz.djdegens.academic.dtos.AnswerDto;
 import kz.djdegens.academic.dtos.ApplicationDto;
 import kz.djdegens.academic.dtos.CourseDto;
 import kz.djdegens.academic.dtos.ModuleDto;
@@ -32,11 +33,16 @@ public class CourseServiceImpl implements CourseService {
     private final UserStorageRepository userStorageRepository;
 
     @Override
-    public void addCourse(CourseDto courseDto) {
+    public ApplicationDto addCourse(CourseDto courseDto) {
         if(courseDto.getCreatorId()==null)throw new IllegalArgumentException("Creator id can not be null");
         User creator = userData.findById(courseDto.getCreatorId());
         Course course = courseMapper.dtoToEntity(courseDto, creator);
         courseData.save(course);
+        return ApplicationDto.builder()
+                .course(CourseDto.builder()
+                        .id(course.getId())
+                        .build())
+                .build();
     }
 
     @Override

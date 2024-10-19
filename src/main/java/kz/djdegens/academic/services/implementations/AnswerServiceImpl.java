@@ -3,6 +3,8 @@ package kz.djdegens.academic.services.implementations;
 import kz.djdegens.academic.datas.interfaces.AnswerData;
 import kz.djdegens.academic.datas.interfaces.QuestionData;
 import kz.djdegens.academic.dtos.AnswerDto;
+import kz.djdegens.academic.dtos.ApplicationDto;
+import kz.djdegens.academic.entities.Answer;
 import kz.djdegens.academic.entities.Question;
 import kz.djdegens.academic.mappers.AnswerMapper;
 import kz.djdegens.academic.services.interfaces.AnswerService;
@@ -20,9 +22,14 @@ public class AnswerServiceImpl implements AnswerService {
     private final QuestionData questionData;
 
     @Override
-    public void addAnswer(AnswerDto answerDto) {
+    public ApplicationDto addAnswer(AnswerDto answerDto) {
         if(Objects.isNull(answerDto))throw new IllegalArgumentException("Answer dto can not be null");
         Question question = questionData.findById(answerDto.getQuestionId());
-        answerData.save(answerMapper.dtoToEntity(answerDto,question));
+        Answer answer = answerData.save(answerMapper.dtoToEntity(answerDto,question));
+        answerDto = new AnswerDto();
+        answerDto.setId(answer.getId());
+        return ApplicationDto.builder()
+                .answer(answerDto)
+                .build();
     }
 }

@@ -18,13 +18,7 @@ public class LessonController {
     @PostMapping("/lesson")
     public ResponseEntity<ApplicationDto> addLesson(@RequestBody LessonDto lessonDto){
         try{
-            lessonService.addLesson(lessonDto);
-            return ResponseEntity.ok().body(ApplicationDto.builder()
-                            .result(ResultDto.builder()
-                                    .status("200")
-                                    .message("Lesson added successfully")
-                                    .build())
-                    .build());
+            return ResponseEntity.ok(lessonService.addLesson(lessonDto));
         }catch (Exception e){
             return ResponseEntity.internalServerError().body(ApplicationDto.builder()
                     .result(ResultDto.builder()

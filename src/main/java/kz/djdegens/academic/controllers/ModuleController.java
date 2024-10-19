@@ -18,13 +18,7 @@ public class ModuleController {
     @PostMapping("/module")
     public ResponseEntity<ApplicationDto> addModule(@RequestBody ModuleDto moduleDto){
         try{
-            moduleService.addModule(moduleDto);
-            return ResponseEntity.ok().body(ApplicationDto.builder()
-                            .result(ResultDto.builder()
-                                    .message("Module added successfully")
-                                    .status("200")
-                                    .build())
-                    .build());
+            return ResponseEntity.ok(moduleService.addModule(moduleDto));
         }catch (Exception e){
             return ResponseEntity.internalServerError().body(ApplicationDto.builder()
                             .result(ResultDto.builder()

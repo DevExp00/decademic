@@ -29,10 +29,15 @@ public class QuestionServiceImpl implements QuestionService {
     private final LessonService lessonService;
 
     @Override
-    public void addQuestion(QuestionDto questionDto) {
+    public ApplicationDto addQuestion(QuestionDto questionDto) {
         if(Objects.isNull(questionDto))throw new IllegalArgumentException("Question dto can not be null");
         Quiz quiz = quizData.findById(questionDto.getQuizId());
-        questionData.save(questionMapper.dtoToEntity(questionDto,quiz));
+        Question question = questionData.save(questionMapper.dtoToEntity(questionDto,quiz));
+        questionDto = new QuestionDto();
+        questionDto.setId(question.getId());
+        return ApplicationDto.builder()
+                .question(questionDto)
+                .build();
     }
 
     @Override

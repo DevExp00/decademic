@@ -18,13 +18,7 @@ public class CourseController {
     @PostMapping("/course")
     public ResponseEntity<ApplicationDto> addCourse(@RequestBody CourseDto courseDto){
         try{
-            courseService.addCourse(courseDto);
-            return ResponseEntity.ok().body(ApplicationDto.builder()
-                            .result(ResultDto.builder()
-                                    .status("200")
-                                    .message("Course added successfully")
-                                    .build())
-                    .build());
+            return ResponseEntity.ok(courseService.addCourse(courseDto));
         }catch (Exception e){
             return ResponseEntity.internalServerError().body(ApplicationDto.builder()
                     .result(ResultDto.builder()

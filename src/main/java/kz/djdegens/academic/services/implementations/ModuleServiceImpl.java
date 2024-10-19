@@ -32,10 +32,15 @@ public class ModuleServiceImpl implements ModuleService {
     private final CourseService courseService;
 
     @Override
-    public void addModule(ModuleDto moduleDto) {
+    public ApplicationDto addModule(ModuleDto moduleDto) {
         if(moduleDto.getCourseId()==null)throw new IllegalArgumentException("Course id can not be null");
         Course course = courseData.findById(moduleDto.getCourseId());
-        moduleData.save(moduleMapper.dtoToEntity(moduleDto,course));
+        Module module = moduleData.save(moduleMapper.dtoToEntity(moduleDto,course));
+        moduleDto = new ModuleDto();
+        moduleDto.setId(module.getId());
+        return ApplicationDto.builder()
+                .module(moduleDto)
+                .build();
     }
 
     @Override

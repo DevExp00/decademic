@@ -22,13 +22,7 @@ public class AnswerController {
     @PostMapping("/answer")
     private ResponseEntity<ApplicationDto> addAnswer(@RequestBody AnswerDto answerDto){
         try{
-            answerService.addAnswer(answerDto);
-            return ResponseEntity.ok().body(ApplicationDto.builder()
-                            .result(ResultDto.builder()
-                                    .status("200")
-                                    .message("Answer added successfully")
-                                    .build())
-                    .build());
+            return ResponseEntity.ok(answerService.addAnswer(answerDto));
         }catch (Exception e){
             return ResponseEntity.internalServerError().body(ApplicationDto.builder()
                             .result(ResultDto.builder()
