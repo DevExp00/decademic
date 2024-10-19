@@ -5,6 +5,8 @@ import kz.djdegens.academic.entities.Course;
 import kz.djdegens.academic.entities.User;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Component
@@ -30,5 +32,19 @@ public class CourseMapper {
                 .description(course.getDescription() == null ? null : course.getDescription())
                 .pointsToPass(String.valueOf(course.getPointsToPass()) == null ? null : String.valueOf(course.getPointsToPass()))
                 .build();
+    }
+
+    public List<CourseDto> entityToDto(List<Course> courses){
+        List<CourseDto> courseDtos = new ArrayList<>();
+        for(Course course : courses){
+            courseDtos.add(CourseDto.builder()
+                    .id(course.getId())
+                    .title(course.getTitle()== null ? null : course.getTitle())
+                    .description(course.getDescription() == null ? null : course.getDescription())
+                    .price(course.getPrice() == null ? null : course.getPrice())
+                    .rate(course.getRate() == null ? null : course.getRate())
+                    .build());
+        }
+        return courseDtos;
     }
 }

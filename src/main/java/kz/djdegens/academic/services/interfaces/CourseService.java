@@ -13,4 +13,6 @@ public interface CourseService {
     void startAttempt(Long courseId,ApplicationDto applicationDto);
 
     void handleCourseCompletion(ModuleCompletion moduleCompletion);
+
+    ApplicationDto getCourses();
 }

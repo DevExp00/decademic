@@ -17,9 +17,7 @@ import kz.djdegens.academic.services.interfaces.CourseService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
-import java.util.NoSuchElementException;
-import java.util.Objects;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -76,5 +74,16 @@ public class CourseServiceImpl implements CourseService {
             courseCompletion.setCompletedAt(new Date());
             courseCompletionData.save(courseCompletion);
         }
+    }
+
+    @Override
+    public ApplicationDto getCourses() {
+        List<Course> courses = courseData.findAll();
+        ApplicationDto.builder()
+                .courses(courseMapper.entityToDto(courses))
+                .build();
+        return ApplicationDto.builder()
+                .courses(courseMapper.entityToDto(courses))
+                .build();
     }
 }

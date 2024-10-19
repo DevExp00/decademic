@@ -68,4 +68,18 @@ public class CourseController {
                     .build());
         }
     }
+
+    @GetMapping("/")
+    public ResponseEntity<ApplicationDto> getCourses(){
+        try{
+            return ResponseEntity.ok(courseService.getCourses());
+        }catch (Exception e){
+            return ResponseEntity.internalServerError().body(ApplicationDto.builder()
+                    .result(ResultDto.builder()
+                            .message(e.getLocalizedMessage())
+                            .status("500")
+                            .build())
+                    .build());
+        }
+    }
 }
