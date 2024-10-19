@@ -13,4 +13,6 @@ public interface ModuleData {
 
     List<Module> findAllByCourseId(Long courseId);
 
+    Integer countAllByCourseId(Long courseId);
+
 }

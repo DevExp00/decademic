@@ -22,6 +22,8 @@ public class CourseDto {
     private String pointsToPass;
     private Integer price;
     private Integer rate;
+    private Integer countModules;
+    private Integer followers;
 
     private List<ModuleDto> modules;
 

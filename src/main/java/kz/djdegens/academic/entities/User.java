@@ -29,9 +29,7 @@ public class User {
     @Column(name = "role")
     private String role;
 
-    @Column(name = "balance")
-    private Integer balance = 0;
-
     @Column(name = "telegram_id")
     private String telegramId;
+
 }

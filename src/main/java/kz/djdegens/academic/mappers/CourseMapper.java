@@ -1,8 +1,12 @@
 package kz.djdegens.academic.mappers;
 
+import kz.djdegens.academic.datas.interfaces.ModuleData;
 import kz.djdegens.academic.dtos.CourseDto;
 import kz.djdegens.academic.entities.Course;
 import kz.djdegens.academic.entities.User;
+import kz.djdegens.academic.entities.UserStorage;
+import kz.djdegens.academic.repositories.UserStorageRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -10,7 +14,11 @@ import java.util.List;
 import java.util.Objects;
 
 @Component
+@RequiredArgsConstructor
 public class CourseMapper {
+
+    private final ModuleData moduleData;
+    private final UserStorageRepository userStorageRepository;
 
     public Course dtoToEntity(CourseDto courseDto, User user){
         if(Objects.isNull(courseDto))throw new IllegalArgumentException("Course dto can not be null");
@@ -43,6 +51,8 @@ public class CourseMapper {
                     .description(course.getDescription() == null ? null : course.getDescription())
                     .price(course.getPrice() == null ? null : course.getPrice())
                     .rate(course.getRate() == null ? null : course.getRate())
+                    .countModules(moduleData.countAllByCourseId(course.getId()))
+                    .followers(userStorageRepository.countAllByCourseId(course.getId()))
                     .build());
         }
         return courseDtos;
