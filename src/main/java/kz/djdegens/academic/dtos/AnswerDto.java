@@ -7,9 +7,8 @@ import lombok.Data;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class AnswerDto {
 
+    private Long id;
     private String answer;
-
     private Long questionId;
-
     private Boolean isCorrect;
 }

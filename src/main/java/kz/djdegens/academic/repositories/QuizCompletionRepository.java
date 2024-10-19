@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface QuizCompletionRepository extends JpaRepository<QuizCompletion, Long> {
+
+    QuizCompletion findByQuizIdAndUserId(Long quizId, Long userId);
 }

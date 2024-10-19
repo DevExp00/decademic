@@ -7,4 +7,6 @@ public interface QuizCompletionData {
     QuizCompletion save(QuizCompletion quizCompletion);
 
     QuizCompletion findById(Long quizCompletionId);
+
+    QuizCompletion findByQuizIdAndUserId(Long quizId, Long userId);
 }

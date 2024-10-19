@@ -6,10 +6,7 @@ import kz.djdegens.academic.dtos.ResultDto;
 import kz.djdegens.academic.services.interfaces.QuizService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/quizzes")
@@ -39,9 +36,10 @@ public class QuizController {
     }
 
     @PostMapping("/{quizId}/attempt")
-    public ResponseEntity<ApplicationDto> startAttempt(@RequestBody ApplicationDto applicationDto){
+    public ResponseEntity<ApplicationDto> startAttempt(@PathVariable Long quizId,
+                                                        @RequestBody ApplicationDto applicationDto){
         try{
-
+            quizService.startAttempt(quizId, applicationDto);
             return ResponseEntity.ok().body(ApplicationDto.builder()
                     .result(ResultDto.builder()
                             .status("200")

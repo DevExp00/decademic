@@ -37,4 +37,18 @@ public class QuestionController {
                     .build());
         }
     }
+
+    @PostMapping("/attempt")
+    public ResponseEntity<ApplicationDto> attemptQuestion(@RequestBody ApplicationDto applicationDto){
+        try{
+            return ResponseEntity.ok(questionService.attemptQuestion(applicationDto));
+        }catch (Exception e){
+            return ResponseEntity.internalServerError().body(ApplicationDto.builder()
+                    .result(ResultDto.builder()
+                            .message(e.getLocalizedMessage())
+                            .status("500")
+                            .build())
+                    .build());
+        }
+    }
 }
