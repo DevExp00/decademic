@@ -37,4 +37,24 @@ public class QuizController {
                     .build());
         }
     }
+
+    @PostMapping("/{quizId}/attempt")
+    public ResponseEntity<ApplicationDto> startAttempt(@RequestBody ApplicationDto applicationDto){
+        try{
+
+            return ResponseEntity.ok().body(ApplicationDto.builder()
+                    .result(ResultDto.builder()
+                            .status("200")
+                            .message("Quiz started successfully")
+                            .build())
+                    .build());
+        }catch (Exception e){
+            return ResponseEntity.internalServerError().body(ApplicationDto.builder()
+                    .result(ResultDto.builder()
+                            .message(e.getLocalizedMessage())
+                            .status("500")
+                            .build())
+                    .build());
+        }
+    }
 }

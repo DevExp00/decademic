@@ -17,4 +17,7 @@ public class UserDto {
     private String lastName;
     private String login;
     private String role;
+    private Integer balance;
+
+    private String telegramId;
 }

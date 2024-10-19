@@ -22,6 +22,13 @@ public class UserDataImpl implements UserData {
     }
 
     @Override
+    public User findByLoginAndRole(String login, String role) {
+        if(Objects.isNull(login))throw new IllegalArgumentException("Login can not be null");
+        if(Objects.isNull(role))throw new IllegalArgumentException("Role can not be null");
+        return userRepository.findByLoginAndRole(login,role);
+    }
+
+    @Override
     public User findByLogin(String login) {
         if(Objects.isNull(login))throw new IllegalArgumentException("Login can not be null");
         return userRepository.findByLogin(login);

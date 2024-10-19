@@ -16,9 +16,9 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping("/check-user")
-    public ResponseEntity<ApplicationDto> addUser(@RequestBody UserDto userDto){
+    public ResponseEntity<ApplicationDto> checkStudent(@RequestBody UserDto userDto){
         try{
-            return ResponseEntity.ok().body(userService.addUser(userDto));
+            return ResponseEntity.ok().body(userService.checkUser(userDto));
         }catch (Exception e){
             return ResponseEntity.internalServerError().body(ApplicationDto.builder()
                             .result(ResultDto.builder()
@@ -28,6 +28,7 @@ public class UserController {
                     .build());
         }
     }
+
 
     @GetMapping("/{userId}")
     public ResponseEntity<ApplicationDto> getUser(@PathVariable Long userId){

@@ -11,7 +11,7 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "dc_lesson_completion")
+@Table(name = "dc_module_completion")
 public class ModuleCompletion {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,10 +19,10 @@ public class ModuleCompletion {
     private Long id;
 
     @Column(name = "score")
-    private Integer score;
+    private Integer score = 0;
 
     @Column(name = "is_passed")
-    private Boolean isPassed;
+    private Boolean isPassed = false;
 
     @Column(name = "completed_at")
     private Date completedAt;
@@ -34,6 +34,10 @@ public class ModuleCompletion {
     @ManyToOne
     @JoinColumn(name = "module_id")
     private Module module;
+
+    @ManyToOne
+    @JoinColumn(name = "course_completion_id")
+    private CourseCompletion courseCompletion;
 }
 
 
