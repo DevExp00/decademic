@@ -20,10 +20,10 @@ public class CourseCompletion {
     private Long id;
 
     @Column(name = "score")
-    private Integer score;
+    private Integer score = 0;
 
     @Column(name = "is_passed")
-    private Boolean isPassed;
+    private Boolean isPassed = false;
 
     @Column(name = "completed_at")
     private Date completedAt;

@@ -20,10 +20,10 @@ public class LessonCompletion {
     private Long id;
 
     @Column(name = "score")
-    private Integer score;
+    private Integer score = 0;
 
     @Column(name = "is_passed")
-    private Boolean isPassed;
+    private Boolean isPassed = false;
 
     @Column(name = "completed_at")
     private Date completedAt;
@@ -35,4 +35,8 @@ public class LessonCompletion {
     @ManyToOne
     @JoinColumn(name = "lesson_id")
     private Lesson lesson;
+
+    @ManyToOne
+    @JoinColumn(name = "module_completion_id")
+    private ModuleCompletion moduleCompletion;
 }

@@ -35,6 +35,26 @@ public class CourseController {
         }
     }
 
+    @PostMapping("/{courseId}/attempt")
+    public ResponseEntity<ApplicationDto> startAttempt(@PathVariable Long courseId,@RequestBody ApplicationDto applicationDto){
+        try{
+            courseService.startAttempt(courseId,applicationDto);
+            return ResponseEntity.ok().body(ApplicationDto.builder()
+                    .result(ResultDto.builder()
+                            .status("200")
+                            .message("Attempt started successfully")
+                            .build())
+                    .build());
+        }catch (Exception e){
+            return ResponseEntity.internalServerError().body(ApplicationDto.builder()
+                            .result(ResultDto.builder()
+                                    .message(e.getLocalizedMessage())
+                                    .status("500")
+                                    .build())
+                    .build());
+        }
+    }
+
     @GetMapping("/{courseId}")
     public ResponseEntity<ApplicationDto> getCourse(@PathVariable Long courseId){
         try{

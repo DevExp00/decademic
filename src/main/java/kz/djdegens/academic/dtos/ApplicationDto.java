@@ -23,6 +23,9 @@ public class ApplicationDto {
     private QuizDto quiz;
     private QuestionDto question;
     private AnswerDto answer;
+    private CourseCompletionDto courseCompletion;
+    private ModuleCompletionDto moduleCompletion;
+    private LessonCompletionDto lessonCompletionDto;
 
     private List<CourseDto> courses;
     private List<ModuleDto> modules;

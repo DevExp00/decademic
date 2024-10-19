@@ -48,4 +48,25 @@ public class ModuleController {
                     .build());
         }
     }
+
+    @PostMapping("/{moduleId}/attempt")
+    public ResponseEntity<ApplicationDto> startAttempt(@PathVariable Long moduleId,
+                                                       @RequestBody ApplicationDto applicationDto){
+        try{
+            moduleService.startAttempt(moduleId, applicationDto);
+            return ResponseEntity.ok().body(ApplicationDto.builder()
+                    .result(ResultDto.builder()
+                            .message("Module attempt started successfully")
+                            .status("200")
+                            .build())
+                    .build());
+        }catch (Exception e){
+            return ResponseEntity.internalServerError().body(ApplicationDto.builder()
+                    .result(ResultDto.builder()
+                            .status("500")
+                            .message(e.getLocalizedMessage())
+                            .build())
+                    .build());
+        }
+    }
 }

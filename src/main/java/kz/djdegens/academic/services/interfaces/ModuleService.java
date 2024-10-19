@@ -8,4 +8,6 @@ public interface ModuleService {
     void addModule(ModuleDto moduleDto);
 
     ApplicationDto getModule(Long moduleId);
+
+    void startAttempt(Long moduleId, ApplicationDto applicationDto);
 }

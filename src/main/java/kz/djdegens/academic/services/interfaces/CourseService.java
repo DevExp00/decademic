@@ -8,4 +8,6 @@ public interface CourseService {
     void addCourse(CourseDto courseDto);
 
     ApplicationDto getCourse(Long courseId);
+
+    void startAttempt(Long courseId,ApplicationDto applicationDto);
 }
