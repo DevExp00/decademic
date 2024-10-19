@@ -6,6 +6,7 @@ import kz.djdegens.academic.repositories.AnswerRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Objects;
 
 @Service
@@ -24,5 +25,11 @@ public class AnswerDataImpl implements AnswerData {
     public Answer findCorrectAnswerByQuestionId(Long questionId) {
         if(Objects.isNull(questionId))throw new IllegalArgumentException("Question id can not be null");
         return answerRepository.findByQuestionIdAndIsCorrect(questionId, true);
+    }
+
+    @Override
+    public List<Answer> findAllByQuestionId(Long questionId) {
+        if(Objects.isNull(questionId))throw new IllegalArgumentException("Question id can not be null");
+        return answerRepository.findAllByQuestionId(questionId);
     }
 }

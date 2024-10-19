@@ -35,4 +35,5 @@ public class LessonDataImpl implements LessonData {
         if(Objects.isNull(moduleId))throw new IllegalArgumentException("Module id can not be null");
         return lessonRepository.findAllByModuleId(moduleId);
     }
+
 }
