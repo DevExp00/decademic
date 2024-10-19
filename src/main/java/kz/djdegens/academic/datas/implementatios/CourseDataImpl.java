@@ -7,6 +7,7 @@ import kz.djdegens.academic.repositories.CourseRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.Optional;
@@ -29,5 +30,10 @@ public class CourseDataImpl implements CourseData {
         Optional<Course> optionalCourse = courseRepository.findById(courseId);
         if(optionalCourse.isEmpty())throw new NoSuchElementException("Course not found");
         return optionalCourse.get();
+    }
+
+    @Override
+    public List<Course> findAll() {
+        return courseRepository.findAll();
     }
 }

@@ -1,11 +1,13 @@
 package kz.djdegens.academic.datas.implementatios;
 
 import kz.djdegens.academic.datas.interfaces.QuizCompletionData;
+import kz.djdegens.academic.entities.LessonCompletion;
 import kz.djdegens.academic.entities.QuizCompletion;
 import kz.djdegens.academic.repositories.QuizCompletionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.Optional;
@@ -36,5 +38,14 @@ public class QuizCompletionDataImpl implements QuizCompletionData {
         if(Objects.isNull(quizId))throw new IllegalArgumentException("Quiz id can not be null");
         if(Objects.isNull(userId))throw new IllegalArgumentException("User id can not be null");
         return quizCompletionRepository.findByQuizIdAndUserId(quizId,userId);
+    }
+
+    @Override
+    public List<QuizCompletion> findAllByQuizIdAndLessonCompletionAndUserIdAndIsPassed(Long quizId, LessonCompletion lessonCompletion, Long userId, Boolean isPassed) {
+        if(Objects.isNull(quizId)) throw new IllegalArgumentException("Quiz id can not be null");
+        if(Objects.isNull(lessonCompletion)) throw new IllegalArgumentException("Lesson completion can not be null");
+        if(Objects.isNull(userId)) throw new IllegalArgumentException("User id can not be null");
+        if(Objects.isNull(isPassed)) throw new IllegalArgumentException("Is Passed can not be null");
+        return quizCompletionRepository.findAllByQuizIdAndLessonCompletionAndUserIdAndIsPassed(quizId, lessonCompletion, userId, isPassed);
     }
 }

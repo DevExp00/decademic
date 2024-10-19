@@ -8,10 +8,12 @@ import kz.djdegens.academic.entities.*;
 import kz.djdegens.academic.entities.Module;
 import kz.djdegens.academic.mappers.LessonMapper;
 import kz.djdegens.academic.mappers.ModuleMapper;
+import kz.djdegens.academic.services.interfaces.CourseService;
 import kz.djdegens.academic.services.interfaces.ModuleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 
@@ -27,6 +29,7 @@ public class ModuleServiceImpl implements ModuleService {
     private final CourseCompletionData courseCompletionData;
     private final UserData userData;
     private final ModuleCompletionData moduleCompletionData;
+    private final CourseService courseService;
 
     @Override
     public void addModule(ModuleDto moduleDto) {
@@ -58,5 +61,20 @@ public class ModuleServiceImpl implements ModuleService {
         moduleCompletion.setCourseCompletion(courseCompletion);
         moduleCompletion.setUser(student);
         moduleCompletionData.save(moduleCompletion);
+    }
+
+    @Override
+    public void handleModuleCompletion(LessonCompletion lessonCompletion) {
+        if(Objects.isNull(lessonCompletion))throw new IllegalArgumentException("Lesson completion can not be null");
+        ModuleCompletion moduleCompletion = lessonCompletion.getModuleCompletion();
+        Integer score = moduleCompletion.getScore();
+        Integer scoreToPass = moduleCompletion.getModule().getPointsToPass();
+        if(score >= scoreToPass){
+            moduleCompletion.setIsPassed(true);
+            moduleCompletion.setCompletedAt(new Date());
+            moduleCompletion.getCourseCompletion().setScore(score + moduleCompletion.getCourseCompletion().getScore());
+            moduleCompletionData.save(moduleCompletion);
+            courseService.handleCourseCompletion(moduleCompletion);
+        }
     }
 }

@@ -43,6 +43,7 @@ public class QuestionController {
         try{
             return ResponseEntity.ok(questionService.attemptQuestion(applicationDto));
         }catch (Exception e){
+            e.printStackTrace();
             return ResponseEntity.internalServerError().body(ApplicationDto.builder()
                     .result(ResultDto.builder()
                             .message(e.getLocalizedMessage())
