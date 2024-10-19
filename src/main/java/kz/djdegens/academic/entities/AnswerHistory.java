@@ -32,4 +32,8 @@ public class AnswerHistory {
     @ManyToOne
     @JoinColumn(name = "answer_id")
     private Answer answer;
+
+    @ManyToOne
+    @JoinColumn(name = "quiz_completion_id")
+    private QuizCompletion quizCompletion;
 }

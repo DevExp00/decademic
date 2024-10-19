@@ -8,6 +8,7 @@ import kz.djdegens.academic.dtos.ApplicationDto;
 import kz.djdegens.academic.dtos.CourseDto;
 import kz.djdegens.academic.entities.Course;
 import kz.djdegens.academic.entities.CourseCompletion;
+import kz.djdegens.academic.entities.ModuleCompletion;
 import kz.djdegens.academic.entities.User;
 import kz.djdegens.academic.mappers.CourseMapper;
 import kz.djdegens.academic.mappers.ModuleMapper;
@@ -16,6 +17,7 @@ import kz.djdegens.academic.services.interfaces.CourseService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 
@@ -61,5 +63,18 @@ public class CourseServiceImpl implements CourseService {
         courseCompletion.setCourse(course);
         courseCompletion.setUser(student);
         courseCompletionData.save(courseCompletion);
+    }
+
+    @Override
+    public void handleCourseCompletion(ModuleCompletion moduleCompletion) {
+        if(Objects.isNull(moduleCompletion))throw new IllegalArgumentException("Module completion can not be null");
+        CourseCompletion courseCompletion = moduleCompletion.getCourseCompletion();
+        Integer score = courseCompletion.getScore();
+        Integer scoreToPass = courseCompletion.getCourse().getPointsToPass();
+        if(score >= scoreToPass){
+            courseCompletion.setIsPassed(true);
+            courseCompletion.setCompletedAt(new Date());
+            courseCompletionData.save(courseCompletion);
+        }
     }
 }

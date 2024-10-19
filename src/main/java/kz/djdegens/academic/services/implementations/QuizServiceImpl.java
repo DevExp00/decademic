@@ -1,9 +1,6 @@
 package kz.djdegens.academic.services.implementations;
 
-import kz.djdegens.academic.datas.interfaces.LessonCompletionData;
-import kz.djdegens.academic.datas.interfaces.LessonData;
-import kz.djdegens.academic.datas.interfaces.QuizData;
-import kz.djdegens.academic.datas.interfaces.UserData;
+import kz.djdegens.academic.datas.interfaces.*;
 import kz.djdegens.academic.dtos.ApplicationDto;
 import kz.djdegens.academic.dtos.QuizDto;
 import kz.djdegens.academic.entities.Lesson;
@@ -25,6 +22,7 @@ public class QuizServiceImpl implements QuizService {
     private final LessonData lessonData;
     private final UserData userData;
     private final LessonCompletionData lessonCompletionData;
+    private final QuizCompletionData quizCompletionData;
 
 
     @Override
@@ -37,13 +35,14 @@ public class QuizServiceImpl implements QuizService {
     public void startAttempt(Long quizId, ApplicationDto applicationDto) {
         if(Objects.isNull(quizId))throw new IllegalArgumentException("Quiz id can not be null");
         if(Objects.isNull(applicationDto.getUser()))throw new IllegalArgumentException("User can not be null");
-        if(Objects.isNull(applicationDto.getLessonCompletionDto()))throw new IllegalArgumentException("Lesson completion can not be null");
+        if(Objects.isNull(applicationDto.getLessonCompletion()))throw new IllegalArgumentException("Lesson completion can not be null");
         User user = userData.findById(applicationDto.getUser().getId());
         if(user.getRole().equals("instructor"))throw new RuntimeException("Instructor can not start course");
         QuizCompletion quizCompletion = new QuizCompletion();
         quizCompletion.setUser(user);
         quizCompletion.setQuiz(quizData.findById(quizId));
-        quizCompletion.setLessonCompletion(lessonCompletionData.findById(applicationDto.getLessonCompletionDto().getId()));
+        quizCompletion.setLessonCompletion(lessonCompletionData.findById(applicationDto.getLessonCompletion().getId()));
+        quizCompletionData.save(quizCompletion);
 
     }
 }
