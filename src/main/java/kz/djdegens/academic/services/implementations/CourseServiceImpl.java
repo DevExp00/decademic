@@ -103,4 +103,13 @@ public class CourseServiceImpl implements CourseService {
                 .courses(courseMapper.entityToDto(courses))
                 .build();
     }
+
+    @Override
+    public ApplicationDto getCoursesByUserId(Long userId) {
+        User user = userData.findById(userId);
+        List<Course> courses = courseData.findAllByCreatorId(user.getId());
+        return ApplicationDto.builder()
+                .courses(courseMapper.entityToDto(courses))
+                .build();
+    }
 }

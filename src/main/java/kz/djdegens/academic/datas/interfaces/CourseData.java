@@ -13,4 +13,6 @@ public interface CourseData {
 
     List<Course> findAll();
 
+    List<Course> findAllByCreatorId(Long creatorId);
+
 }

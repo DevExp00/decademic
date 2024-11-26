@@ -18,7 +18,13 @@ public class UserController {
     @PostMapping("/check-user")
     public ResponseEntity<ApplicationDto> checkStudent(@RequestBody UserDto userDto){
         try{
-            return ResponseEntity.ok().body(userService.checkUser(userDto));
+            userService.checkUser(userDto);
+            return ResponseEntity.ok().body(ApplicationDto.builder()
+                            .result(ResultDto.builder()
+                                    .message("User checked in successfully")
+                                    .status("200")
+                                    .build())
+                    .build());
         }catch (Exception e){
             return ResponseEntity.internalServerError().body(ApplicationDto.builder()
                             .result(ResultDto.builder()
@@ -34,6 +40,21 @@ public class UserController {
     public ResponseEntity<ApplicationDto> getUser(@PathVariable Long userId){
         try{
             return ResponseEntity.ok().body(userService.getUser(userId));
+        }catch (Exception e){
+            return ResponseEntity.internalServerError().body(ApplicationDto.builder()
+                    .result(ResultDto.builder()
+                            .message(e.getLocalizedMessage())
+                            .status("500")
+                            .build())
+                    .build());
+        }
+    }
+
+    @GetMapping("/user-info")
+    public ResponseEntity<ApplicationDto> getUser(@RequestParam Long telegramId,
+                                                  @RequestParam Boolean isInstructor){
+        try{
+            return ResponseEntity.ok().body(userService.getUserByTelegramIdAndIsInstructor(telegramId,isInstructor));
         }catch (Exception e){
             return ResponseEntity.internalServerError().body(ApplicationDto.builder()
                     .result(ResultDto.builder()

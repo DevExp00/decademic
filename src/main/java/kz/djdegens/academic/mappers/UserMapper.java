@@ -16,7 +16,7 @@ public class UserMapper {
         user.setLastName(userDto.getLastName() == null ? null : userDto.getLastName());
         user.setLogin(userDto.getLogin() == null ? null : userDto.getLogin());
         user.setRole(userDto.getRole() == null ? null : userDto.getRole());
-        user.setTelegramId(userDto.getTelegramId() == null ? null : userDto.getTelegramId());
+        user.setTelegramId(userDto.getTelegramId() == null ? null : Long.valueOf(userDto.getTelegramId()));
         return user;
     }
 
@@ -38,7 +38,7 @@ public class UserMapper {
         userDto.setLastName(user.getLastName() == null ? null : user.getLastName());
         userDto.setLogin(user.getLogin() == null ? null : user.getLogin());
         userDto.setRole(user.getRole() == null ? null : user.getRole());
-        userDto.setTelegramId(user.getTelegramId() == null ? null : user.getTelegramId());
+        userDto.setTelegramId(user.getTelegramId() == null ? null : user.getTelegramId().toString());
         return userDto;
     }
 }

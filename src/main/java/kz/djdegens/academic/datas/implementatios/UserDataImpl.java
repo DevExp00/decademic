@@ -42,7 +42,7 @@ public class UserDataImpl implements UserData {
     }
 
     @Override
-    public User findByTelegramIdAndRole(String telegramId, String role) {
+    public User findByTelegramIdAndRole(Long telegramId, String role) {
         if(Objects.isNull(telegramId))throw new IllegalArgumentException("telegramId can not be null");
         if(Objects.isNull(role))throw new IllegalArgumentException("Role can not be null");
         return userRepository.findByTelegramIdAndRole(telegramId, role);

@@ -18,4 +18,6 @@ public interface CourseService {
     void handleCourseCompletion(ModuleCompletion moduleCompletion);
 
     ApplicationDto getCourses();
+
+    ApplicationDto getCoursesByUserId(Long userId);
 }

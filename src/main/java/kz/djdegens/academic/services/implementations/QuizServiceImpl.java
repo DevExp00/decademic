@@ -62,6 +62,7 @@ public class QuizServiceImpl implements QuizService {
         List<QuestionDto> questionDtos = new ArrayList<>();
         for(Question question : questions){
             QuestionDto questionDto = new QuestionDto();
+            questionDto.setId(question.getId());
             questionDto.setQuestion(question.getQuestion() == null ? null : question.getQuestion());
             questionDto.setIsMultiple(question.getIsMultiple() == null ? null : question.getIsMultiple());
             questionDto.setPoints(question.getPoints() == null ? null : question.getPoints());

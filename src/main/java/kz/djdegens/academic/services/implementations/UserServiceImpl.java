@@ -18,26 +18,30 @@ public class UserServiceImpl implements UserService {
     private final UserMapper userMapper;
     private final UserData userData;
     @Override
-    public ApplicationDto checkUser(UserDto userDto) {
+    public void checkUser(UserDto userDto) {
         if(Objects.isNull(userDto))throw new IllegalArgumentException("Student dto can not be null");
         if(Objects.isNull(userDto.getLogin())) throw new IllegalArgumentException("Student login can not be null");
         if(Objects.isNull(userDto.getRole()))throw new IllegalArgumentException("Role can not be null");
-        User user = userData.findByTelegramIdAndRole(userDto.getTelegramId(), userDto.getRole());
+        User user = userData.findByTelegramIdAndRole(Long.valueOf(userDto.getTelegramId()), userDto.getRole());
         if(Objects.isNull(user)){
-            user = userData.save(userMapper.dtoToEntity(userDto));
+            userData.save(userMapper.dtoToEntity(userDto));
         }else {
-            user = userData.save(userMapper.dtoToEntity(user, userDto));
+            userData.save(userMapper.dtoToEntity(user, userDto));
         }
-        return ApplicationDto.builder()
-                .user(UserDto.builder()
-                        .id(user.getId())
-                        .build())
-                .build();
     }
 
     @Override
     public ApplicationDto getUser(Long userId) {
         User user = userData.findById(userId);
+        UserDto userDto = userMapper.entityToDto(user);
+        return ApplicationDto.builder()
+                .user(userDto)
+                .build();
+    }
+
+    @Override
+    public ApplicationDto getUserByTelegramIdAndIsInstructor(Long telegramId, Boolean isInstructor) {
+        User user = userData.findByTelegramIdAndRole(telegramId, isInstructor ? "instructor" : "student");
         UserDto userDto = userMapper.entityToDto(user);
         return ApplicationDto.builder()
                 .user(userDto)

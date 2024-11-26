@@ -49,6 +49,20 @@ public class CourseController {
         }
     }
 
+    @GetMapping("/by-user")
+    public ResponseEntity<ApplicationDto> getCoursesByUserId(@RequestParam Long userId){
+        try{
+            return ResponseEntity.ok(courseService.getCoursesByUserId(userId));
+        }catch (Exception e){
+            return ResponseEntity.internalServerError().body(ApplicationDto.builder()
+                    .result(ResultDto.builder()
+                            .message(e.getLocalizedMessage())
+                            .status("500")
+                            .build())
+                    .build());
+        }
+    }
+
     @GetMapping("/{courseId}")
     public ResponseEntity<ApplicationDto> getCourse(@PathVariable Long courseId){
         try{

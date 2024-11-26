@@ -8,7 +8,7 @@ public interface UserData {
 
     User findByLogin(String login);
 
-    User findByTelegramIdAndRole(String telegramId, String role);
+    User findByTelegramIdAndRole(Long telegramId, String role);
 
     User findByLoginAndRole(String login, String role);
 

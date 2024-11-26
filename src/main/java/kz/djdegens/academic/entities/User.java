@@ -30,6 +30,6 @@ public class User {
     private String role;
 
     @Column(name = "telegram_id")
-    private String telegramId;
+    private Long telegramId;
 
 }

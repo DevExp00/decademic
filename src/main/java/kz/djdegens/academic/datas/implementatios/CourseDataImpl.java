@@ -36,4 +36,10 @@ public class CourseDataImpl implements CourseData {
     public List<Course> findAll() {
         return courseRepository.findAll();
     }
+
+    @Override
+    public List<Course> findAllByCreatorId(Long creatorId) {
+        if(Objects.isNull(creatorId))throw new IllegalArgumentException("Creator id can not be null");
+        return courseRepository.findAllByCreatorId(creatorId);
+    }
 }
