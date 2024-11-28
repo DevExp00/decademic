@@ -16,9 +16,9 @@ public class QuestionController {
     private final QuestionService questionService;
 
     @PostMapping("/question")
-    public ResponseEntity<ApplicationDto> addQuestion(@RequestBody QuestionDto questionDto){
+    public ResponseEntity<ApplicationDto> addQuestion(@RequestBody ApplicationDto application){
         try{
-            return ResponseEntity.ok(questionService.addQuestion(questionDto));
+            return ResponseEntity.ok(questionService.addQuestion(application));
         }catch (Exception e){
             return ResponseEntity.internalServerError().body(ApplicationDto.builder()
                             .result(ResultDto.builder()

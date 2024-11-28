@@ -1,16 +1,15 @@
 package kz.djdegens.academic.services.implementations;
 
 import kz.djdegens.academic.datas.interfaces.*;
-import kz.djdegens.academic.dtos.AnswerDto;
-import kz.djdegens.academic.dtos.ApplicationDto;
-import kz.djdegens.academic.dtos.QuestionDto;
-import kz.djdegens.academic.dtos.QuizCompletionDto;
+import kz.djdegens.academic.dtos.*;
 import kz.djdegens.academic.entities.*;
 import kz.djdegens.academic.mappers.QuestionMapper;
+import kz.djdegens.academic.services.interfaces.AnswerService;
 import kz.djdegens.academic.services.interfaces.LessonService;
 import kz.djdegens.academic.services.interfaces.QuestionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -28,16 +27,25 @@ public class QuestionServiceImpl implements QuestionService {
     private final QuizCompletionData quizCompletionData;
     private final UserData userData;
     private final LessonService lessonService;
+    private final AnswerService answerService;
 
     @Override
-    public ApplicationDto addQuestion(QuestionDto questionDto) {
-        if(Objects.isNull(questionDto))throw new IllegalArgumentException("Question dto can not be null");
+    @Transactional
+    public ApplicationDto addQuestion(ApplicationDto application) {
+        if(Objects.isNull(application.getQuestion()))throw new IllegalArgumentException("Question dto can not be null");
+        if(Objects.isNull(application.getAnswers()))throw new IllegalArgumentException("Answers dto can not be null");
+        QuestionDto questionDto = application.getQuestion();
         Quiz quiz = quizData.findById(questionDto.getQuizId());
         Question question = questionData.save(questionMapper.dtoToEntity(questionDto,quiz));
-        questionDto = new QuestionDto();
-        questionDto.setId(question.getId());
+        for(AnswerDto answerDto : application.getAnswers()){
+            answerDto.setQuestionId(question.getId());
+            answerService.addAnswer(answerDto);
+        }
         return ApplicationDto.builder()
-                .question(questionDto)
+                .result(ResultDto.builder()
+                        .status("200")
+                        .message("Question added successfully")
+                        .build())
                 .build();
     }
 
