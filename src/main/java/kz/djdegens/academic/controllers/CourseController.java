@@ -18,7 +18,8 @@ public class CourseController {
     @PostMapping("/course")
     public ResponseEntity<ApplicationDto> addCourse(@RequestBody CourseDto courseDto){
         try{
-            return ResponseEntity.ok(courseService.addCourse(courseDto));
+            courseService.addCourse(courseDto);
+            return ResponseEntity.ok(ApplicationDto.builder().result(ResultDto.builder().message("Course added successfully").status("200").build()).build());
         }catch (Exception e){
             return ResponseEntity.internalServerError().body(ApplicationDto.builder()
                     .result(ResultDto.builder()
@@ -67,6 +68,37 @@ public class CourseController {
     public ResponseEntity<ApplicationDto> getCourse(@PathVariable Long courseId){
         try{
             return ResponseEntity.ok(courseService.getCourse(courseId));
+        }catch (Exception e){
+            return ResponseEntity.internalServerError().body(ApplicationDto.builder()
+                    .result(ResultDto.builder()
+                            .message(e.getLocalizedMessage())
+                            .status("500")
+                            .build())
+                    .build());
+        }
+    }
+
+    @DeleteMapping("/{courseId}")
+    public ResponseEntity<ApplicationDto> deleteCourse(@PathVariable Long courseId){
+        try{
+            courseService.deleteCourse(courseId);
+            return ResponseEntity.ok(ApplicationDto.okResult("Course deleted successfully"));
+        }catch (Exception e){
+            return ResponseEntity.internalServerError().body(ApplicationDto.builder()
+                    .result(ResultDto.builder()
+                            .message(e.getLocalizedMessage())
+                            .status("500")
+                            .build())
+                    .build());
+        }
+    }
+
+    @PutMapping("/{courseId}")
+    public ResponseEntity<ApplicationDto> editCourse(@PathVariable Long courseId,
+                                                     @RequestBody CourseDto courseDto){
+        try{
+            courseService.editCourse(courseId, courseDto);
+            return ResponseEntity.ok(ApplicationDto.okResult("Course edited successfully"));
         }catch (Exception e){
             return ResponseEntity.internalServerError().body(ApplicationDto.builder()
                     .result(ResultDto.builder()

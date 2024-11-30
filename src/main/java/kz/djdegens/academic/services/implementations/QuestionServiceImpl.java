@@ -31,7 +31,7 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Override
     @Transactional
-    public ApplicationDto addQuestion(ApplicationDto application) {
+    public void addQuestion(ApplicationDto application) {
         if(Objects.isNull(application.getQuestion()))throw new IllegalArgumentException("Question dto can not be null");
         if(Objects.isNull(application.getAnswers()))throw new IllegalArgumentException("Answers dto can not be null");
         QuestionDto questionDto = application.getQuestion();
@@ -41,12 +41,6 @@ public class QuestionServiceImpl implements QuestionService {
             answerDto.setQuestionId(question.getId());
             answerService.addAnswer(answerDto);
         }
-        return ApplicationDto.builder()
-                .result(ResultDto.builder()
-                        .status("200")
-                        .message("Question added successfully")
-                        .build())
-                .build();
     }
 
     @Override
@@ -90,5 +84,15 @@ public class QuestionServiceImpl implements QuestionService {
                         .completedAt(new Date().toString())
                         .build())
                 .build();
+    }
+
+    @Override
+    @Transactional
+    public void editQuestion(Long questionId, ApplicationDto applicationDto){
+        Question question = questionData.findById(questionId);
+        for(AnswerDto answerDto : applicationDto.getAnswers()){
+            answerService.editAnswer(answerDto.getId(),answerDto);
+        }
+        questionData.save(questionMapper.dtoToEntity(question,applicationDto.getQuestion()));
     }
 }

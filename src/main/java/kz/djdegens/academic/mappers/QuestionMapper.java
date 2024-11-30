@@ -20,4 +20,14 @@ public class QuestionMapper {
         question.setIsMultiple(questionDto.getIsMultiple() == null ? null : questionDto.getIsMultiple());
         return question;
     }
+
+    public Question dtoToEntity(Question question, QuestionDto questionDto){
+        if(Objects.isNull(question))throw new IllegalArgumentException("Question can not be null");
+        if(Objects.isNull(questionDto))throw new IllegalArgumentException("questionDto can not be null");
+        question.setQuestion(questionDto.getQuestion() == null ? question.getQuestion() : questionDto.getQuestion());
+        question.setPoints(questionDto.getPoints() == null ? question.getPoints() : questionDto.getPoints());
+        question.setIsMultiple(questionDto.getIsMultiple() == null ? question.getIsMultiple() : questionDto.getIsMultiple());
+        return question;
+
+    }
 }

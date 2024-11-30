@@ -18,13 +18,30 @@ public class QuestionController {
     @PostMapping("/question")
     public ResponseEntity<ApplicationDto> addQuestion(@RequestBody ApplicationDto application){
         try{
-            return ResponseEntity.ok(questionService.addQuestion(application));
+            questionService.addQuestion(application);
+            return ResponseEntity.ok(ApplicationDto.okResult("Question added successfully"));
         }catch (Exception e){
             return ResponseEntity.internalServerError().body(ApplicationDto.builder()
                             .result(ResultDto.builder()
                                     .message(e.getLocalizedMessage())
                                     .status("500")
                                     .build())
+                    .build());
+        }
+    }
+
+    @PutMapping("/{questionId}")
+    public ResponseEntity<ApplicationDto> editQuestion(@PathVariable Long questionId,
+                                                       @RequestBody ApplicationDto applicationDto){
+        try{
+            questionService.editQuestion(questionId,applicationDto);
+            return ResponseEntity.ok(ApplicationDto.okResult("Question edited successfully"));
+        }catch (Exception e){
+            return ResponseEntity.internalServerError().body(ApplicationDto.builder()
+                    .result(ResultDto.builder()
+                            .message(e.getLocalizedMessage())
+                            .status("500")
+                            .build())
                     .build());
         }
     }

@@ -38,7 +38,8 @@ public class CourseMapper {
                 .id(course.getId())
                 .title(course.getTitle() == null ? null : course.getTitle())
                 .description(course.getDescription() == null ? null : course.getDescription())
-                .pointsToPass(String.valueOf(course.getPointsToPass()) == null ? null : String.valueOf(course.getPointsToPass()))
+                .pointsToPass(course.getPointsToPass() == null ? null : String.valueOf(course.getPointsToPass()))
+                .price(course.getPrice() == null ? null : course.getPrice())
                 .build();
     }
 
@@ -56,5 +57,15 @@ public class CourseMapper {
                     .build());
         }
         return courseDtos;
+    }
+
+    public Course dtoToEntity(Course course, CourseDto courseDto){
+        if(Objects.isNull(course))throw new IllegalArgumentException("Course can not be null");
+        if(Objects.isNull(courseDto))throw new IllegalArgumentException("Course dto can not be null");
+        course.setPrice(courseDto.getPrice() == null ? course.getPrice() : courseDto.getPrice());
+        course.setTitle(courseDto.getTitle() == null ? course.getTitle() : courseDto.getTitle());
+        course.setDescription(courseDto.getDescription() == null ? course.getDescription() : courseDto.getDescription());
+        course.setPointsToPass(courseDto.getPointsToPass() == null ? course.getPointsToPass() : Integer.valueOf(courseDto.getPointsToPass()));
+        return course;
     }
 }

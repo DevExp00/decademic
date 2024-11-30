@@ -19,4 +19,13 @@ public class AnswerMapper {
         answer.setIsCorrect(answerDto.getIsCorrect() == null ? null : answerDto.getIsCorrect());
         return answer;
     }
+
+    public Answer dtoToEntity(Answer answer, AnswerDto answerDto){
+        if(Objects.isNull(answerDto))throw new IllegalArgumentException("Answer dto can not be null");
+        if(Objects.isNull(answer))throw new IllegalArgumentException("Answer can not be null");
+        answer.setIsCorrect(answerDto.getIsCorrect() == null ? answer.getIsCorrect() : answerDto.getIsCorrect());
+        answer.setAnswer(answerDto.getAnswer() == null ? answer.getAnswer() : answerDto.getAnswer());
+        return answer;
+
+    }
 }

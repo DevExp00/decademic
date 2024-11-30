@@ -33,15 +33,10 @@ public class LessonServiceImpl implements LessonService {
     private final QuizData quizData;
 
     @Override
-    public ApplicationDto addLesson(LessonDto lessonDto) {
+    public void addLesson(LessonDto lessonDto) {
         if(lessonDto.getModuleId()==null)throw new IllegalArgumentException("Module id can not be null");
         Module module = moduleData.findById(lessonDto.getModuleId());
-        Lesson lesson = lessonData.save(lessonMapper.dtoToEntity(lessonDto,module));
-        lessonDto = new LessonDto();
-        lessonDto.setId(lesson.getId());
-        return ApplicationDto.builder()
-                .lesson(lessonDto)
-                .build();
+        lessonData.save(lessonMapper.dtoToEntity(lessonDto,module));
     }
 
     @Override
@@ -81,5 +76,11 @@ public class LessonServiceImpl implements LessonService {
                 .lesson(lessonMapper.entityToDto(lesson))
                 .quizzes(quizMapper.entityToDto(quizData.findAllByLessonId(lesson.getId())))
                 .build();
+    }
+
+    @Override
+    public void editLesson(Long lessonId, LessonDto lessonDto) {
+        Lesson lesson = lessonData.findById(lessonId);
+        lessonData.save(lessonMapper.dtoToEntity(lesson,lessonDto));
     }
 }

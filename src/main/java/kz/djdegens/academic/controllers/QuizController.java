@@ -18,7 +18,8 @@ public class QuizController {
     @PostMapping("/quiz")
     public ResponseEntity<ApplicationDto> addQuiz(@RequestBody QuizDto quizDto){
         try{
-            return ResponseEntity.ok(quizService.addQuiz(quizDto));
+            quizService.addQuiz(quizDto);
+            return ResponseEntity.ok(ApplicationDto.okResult("Quiz added successfully"));
         }catch (Exception e){
             return ResponseEntity.internalServerError().body(ApplicationDto.builder()
                             .result(ResultDto.builder()
@@ -54,6 +55,22 @@ public class QuizController {
     public ResponseEntity<ApplicationDto> getQuiz(@PathVariable Long quizId){
         try{
             return ResponseEntity.ok(quizService.getQuiz(quizId));
+        }catch (Exception e){
+            return ResponseEntity.internalServerError().body(ApplicationDto.builder()
+                    .result(ResultDto.builder()
+                            .message(e.getLocalizedMessage())
+                            .status("500")
+                            .build())
+                    .build());
+        }
+    }
+
+    @PutMapping("/{quizId}")
+    public ResponseEntity<ApplicationDto> editQuiz(@PathVariable Long quizId,
+                                                   @RequestBody QuizDto quizDto){
+        try{
+            quizService.editQuiz(quizId, quizDto);
+            return ResponseEntity.ok(ApplicationDto.okResult("Quiz edited successfully"));
         }catch (Exception e){
             return ResponseEntity.internalServerError().body(ApplicationDto.builder()
                     .result(ResultDto.builder()

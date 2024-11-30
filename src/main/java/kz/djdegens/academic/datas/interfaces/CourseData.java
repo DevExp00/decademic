@@ -11,6 +11,8 @@ public interface CourseData {
 
     Course findById(Long courseId);
 
+    void deleteCourse(Long courseId);
+
     List<Course> findAll();
 
     List<Course> findAllByCreatorId(Long creatorId);

@@ -6,12 +6,14 @@ import kz.djdegens.academic.entities.QuizCompletion;
 
 public interface LessonService {
 
-    ApplicationDto addLesson(LessonDto lessonDto);
+    void addLesson(LessonDto lessonDto);
 
     void startAttempt(Long lessonId, ApplicationDto applicationDto);
 
     void handleLessonCompletion(QuizCompletion quizCompletion);
 
     ApplicationDto getLesson(Long lessonId);
+
+    void editLesson(Long lessonId, LessonDto lessonDto);
 
 }

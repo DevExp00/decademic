@@ -6,7 +6,9 @@ import kz.djdegens.academic.entities.Question;
 
 public interface QuestionService {
 
-    ApplicationDto addQuestion(ApplicationDto application);
+    void addQuestion(ApplicationDto application);
+
+    void editQuestion(Long questionId, ApplicationDto applicationDto);
 
     ApplicationDto attemptQuestion(ApplicationDto applicationDto);
 }

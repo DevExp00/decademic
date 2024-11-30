@@ -60,4 +60,14 @@ public class ModuleMapper {
             moduleDto.setLessons(lessonDtos);
         return moduleDto;
     }
+
+    public Module dtoToEntity(Module module, ModuleDto moduleDto){
+        if(Objects.isNull(module))throw new IllegalArgumentException("Module can not be null");
+        if(Objects.isNull(moduleDto))throw new IllegalArgumentException("ModuleDto can not be null");
+        module.setTitle(moduleDto.getTitle() == null ? module.getTitle() : moduleDto.getTitle());
+        module.setDescription(moduleDto.getDescription() == null ? module.getDescription() : moduleDto.getDescription());
+        module.setOrder(moduleDto.getOrderBy() == null ? module.getOrder() : moduleDto.getOrderBy());
+        module.setPointsToPass(moduleDto.getPointsToPass() == null ? module.getPointsToPass() : moduleDto.getPointsToPass());
+        return module;
+    }
 }

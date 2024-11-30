@@ -7,7 +7,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Objects;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -31,5 +33,13 @@ public class AnswerDataImpl implements AnswerData {
     public List<Answer> findAllByQuestionId(Long questionId) {
         if(Objects.isNull(questionId))throw new IllegalArgumentException("Question id can not be null");
         return answerRepository.findAllByQuestionId(questionId);
+    }
+
+    @Override
+    public Answer findById(Long answerId) {
+        if(Objects.isNull(answerId))throw new IllegalArgumentException("Answer id can not be null");
+        Optional<Answer> optional = answerRepository.findById(answerId);
+        if(optional.isEmpty())throw new NoSuchElementException("Answer not found by id :" + answerId);
+        return optional.get();
     }
 }

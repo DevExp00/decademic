@@ -54,4 +54,16 @@ public class LessonMapper {
         }
         return lessonDtos;
     }
+
+    public Lesson dtoToEntity(Lesson lesson , LessonDto lessonDto){
+        if(Objects.isNull(lesson))throw new IllegalArgumentException("Lesson can not be null");
+        if(Objects.isNull(lessonDto))throw new IllegalArgumentException("Lesson dto can not null");
+        lesson.setTitle(lessonDto.getTitle() == null ? lesson.getTitle() : lessonDto.getTitle());
+        lesson.setDescription(lessonDto.getDescription() == null ? lesson.getDescription() : lessonDto.getDescription());
+        lesson.setContentType(lessonDto.getContentType() == null ? lesson.getContentType() : lessonDto.getContentType());
+        lesson.setContent(lessonDto.getContent() == null ? lesson.getContent() : lessonDto.getContent());
+        lesson.setPointsToPass(lessonDto.getPointsToPass() == null ? lesson.getPointsToPass() : lessonDto.getPointsToPass());
+        lesson.setOrder(lessonDto.getOrder() == null ? lesson.getOrder() : lessonDto.getOrder());
+        return lesson;
+    }
 }

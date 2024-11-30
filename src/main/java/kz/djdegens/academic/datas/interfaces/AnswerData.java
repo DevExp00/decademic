@@ -10,5 +10,7 @@ public interface AnswerData {
 
     Answer findCorrectAnswerByQuestionId(Long questionId);
 
+    Answer findById(Long answerId);
+
     List<Answer> findAllByQuestionId(Long questionId);
 }

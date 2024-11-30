@@ -33,16 +33,11 @@ public class CourseServiceImpl implements CourseService {
     private final UserStorageRepository userStorageRepository;
 
     @Override
-    public ApplicationDto addCourse(CourseDto courseDto) {
+    public void addCourse(CourseDto courseDto) {
         if(courseDto.getCreatorId()==null)throw new IllegalArgumentException("Creator id can not be null");
         User creator = userData.findById(courseDto.getCreatorId());
         Course course = courseMapper.dtoToEntity(courseDto, creator);
         courseData.save(course);
-        return ApplicationDto.builder()
-                .course(CourseDto.builder()
-                        .id(course.getId())
-                        .build())
-                .build();
     }
 
     @Override
@@ -111,5 +106,16 @@ public class CourseServiceImpl implements CourseService {
         return ApplicationDto.builder()
                 .courses(courseMapper.entityToDto(courses))
                 .build();
+    }
+
+    @Override
+    public void editCourse(Long courseId, CourseDto dto) {
+        Course course = courseData.findById(courseId);
+        courseData.save(courseMapper.dtoToEntity(course,dto));
+    }
+
+    @Override
+    public void deleteCourse(Long courseId) {
+        courseData.deleteCourse(courseId);
     }
 }

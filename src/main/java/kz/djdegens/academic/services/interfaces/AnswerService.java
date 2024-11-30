@@ -6,4 +6,6 @@ import kz.djdegens.academic.dtos.ApplicationDto;
 public interface AnswerService {
 
     ApplicationDto addAnswer(AnswerDto answerDto);
+
+    void editAnswer(Long answerId, AnswerDto answerDto);
 }

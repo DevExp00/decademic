@@ -32,4 +32,10 @@ public class AnswerServiceImpl implements AnswerService {
                 .answer(answerDto)
                 .build();
     }
+
+    @Override
+    public void editAnswer(Long answerId, AnswerDto answerDto) {
+        Answer answer = answerData.findById(answerId);
+        answerData.save(answerMapper.dtoToEntity(answer,answerDto));
+    }
 }

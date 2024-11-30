@@ -42,4 +42,12 @@ public class CourseDataImpl implements CourseData {
         if(Objects.isNull(creatorId))throw new IllegalArgumentException("Creator id can not be null");
         return courseRepository.findAllByCreatorId(creatorId);
     }
+
+    @Override
+    public void deleteCourse(Long courseId) {
+        if(courseId==null)throw new IllegalArgumentException("Course id can not be null");
+        Optional<Course> optionalCourse = courseRepository.findById(courseId);
+        if(optionalCourse.isEmpty())throw new NoSuchElementException("Course not found");
+        courseRepository.delete(optionalCourse.get());
+    }
 }

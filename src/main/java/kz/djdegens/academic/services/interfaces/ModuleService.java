@@ -6,7 +6,9 @@ import kz.djdegens.academic.entities.LessonCompletion;
 
 public interface ModuleService {
 
-    ApplicationDto addModule(ModuleDto moduleDto);
+    void addModule(ModuleDto moduleDto);
+
+    void editModule(Long moduleId, ModuleDto moduleDto);
 
     ApplicationDto getModule(Long moduleId);
 

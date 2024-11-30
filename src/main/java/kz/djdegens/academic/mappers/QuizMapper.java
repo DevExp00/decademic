@@ -44,4 +44,13 @@ public class QuizMapper {
         quizDto.setPointsToPass(quiz.getPointsToPass() == null ? null : String.valueOf(quiz.getPointsToPass()));
         return quizDto;
     }
+
+    public Quiz dtoToEntity(Quiz quiz, QuizDto quizDto){
+        if(Objects.isNull(quiz))throw new IllegalArgumentException("Quiz can not be null");
+        if(Objects.isNull(quizDto))throw new IllegalArgumentException("Quiz dto can not be null");
+        quiz.setTitle(quizDto.getTitle() == null ? quiz.getTitle() : quizDto.getTitle());
+        quiz.setOrder(quizDto.getOrder() ==null ? quiz.getOrder() : quizDto.getOrder());
+        quiz.setPointsToPass(quizDto.getPointsToPass() == null ? quiz.getPointsToPass() : Integer.valueOf(quizDto.getPointsToPass()));
+        return quiz;
+    }
 }

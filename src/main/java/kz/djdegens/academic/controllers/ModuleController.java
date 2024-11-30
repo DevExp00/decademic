@@ -18,7 +18,8 @@ public class ModuleController {
     @PostMapping("/module")
     public ResponseEntity<ApplicationDto> addModule(@RequestBody ModuleDto moduleDto){
         try{
-            return ResponseEntity.ok(moduleService.addModule(moduleDto));
+            moduleService.addModule(moduleDto);
+            return ResponseEntity.ok(ApplicationDto.okResult("Module added successfully"));
         }catch (Exception e){
             return ResponseEntity.internalServerError().body(ApplicationDto.builder()
                             .result(ResultDto.builder()
@@ -33,6 +34,22 @@ public class ModuleController {
     public ResponseEntity<ApplicationDto> getModule(@PathVariable Long moduleId){
         try{
             return ResponseEntity.ok(moduleService.getModule(moduleId));
+        }catch (Exception e){
+            return ResponseEntity.internalServerError().body(ApplicationDto.builder()
+                    .result(ResultDto.builder()
+                            .status("500")
+                            .message(e.getLocalizedMessage())
+                            .build())
+                    .build());
+        }
+    }
+
+    @PutMapping("/{moduleId}")
+    public ResponseEntity<ApplicationDto> editModule(@PathVariable Long moduleId,
+                                                     @RequestBody ModuleDto moduleDto){
+        try{
+            moduleService.editModule(moduleId, moduleDto);
+            return ResponseEntity.ok(ApplicationDto.okResult("Module edited successfully"));
         }catch (Exception e){
             return ResponseEntity.internalServerError().body(ApplicationDto.builder()
                     .result(ResultDto.builder()

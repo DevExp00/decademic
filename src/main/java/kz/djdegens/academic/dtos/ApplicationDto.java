@@ -35,4 +35,13 @@ public class ApplicationDto {
     private List<QuizDto> quizzes;
     private List<QuestionDto> questions;
     private List<AnswerDto> answers;
+
+    public static ApplicationDto okResult(String message){
+        return ApplicationDto.builder()
+                .result(ResultDto.builder()
+                        .status("200")
+                        .message(message)
+                        .build())
+                .build();
+    }
 }

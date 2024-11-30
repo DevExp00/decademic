@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.util.Date;
 
@@ -27,6 +28,11 @@ public class CourseCompletion {
 
     @Column(name = "completed_at")
     private Date completedAt;
+
+    @CreationTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "started_at")
+    private Date startedAt;
 
     @ManyToOne
     @JoinColumn(name = "student_id")

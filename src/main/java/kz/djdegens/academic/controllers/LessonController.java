@@ -18,7 +18,8 @@ public class LessonController {
     @PostMapping("/lesson")
     public ResponseEntity<ApplicationDto> addLesson(@RequestBody LessonDto lessonDto){
         try{
-            return ResponseEntity.ok(lessonService.addLesson(lessonDto));
+            lessonService.addLesson(lessonDto);
+            return ResponseEntity.ok(ApplicationDto.okResult("Lesson added successfully"));
         }catch (Exception e){
             return ResponseEntity.internalServerError().body(ApplicationDto.builder()
                     .result(ResultDto.builder()
@@ -33,6 +34,22 @@ public class LessonController {
     public ResponseEntity<ApplicationDto> getLesson(@PathVariable Long lessonId){
         try{
             return ResponseEntity.ok(lessonService.getLesson(lessonId));
+        }catch (Exception e){
+            return ResponseEntity.internalServerError().body(ApplicationDto.builder()
+                    .result(ResultDto.builder()
+                            .message(e.getLocalizedMessage())
+                            .status("500")
+                            .build())
+                    .build());
+        }
+    }
+
+    @PutMapping("/{lessonId}")
+    public ResponseEntity<ApplicationDto> editLesson(@PathVariable Long lessonId,
+                                                     @RequestBody LessonDto lessonDto){
+        try{
+            lessonService.editLesson(lessonId, lessonDto);
+            return ResponseEntity.ok(ApplicationDto.okResult("Lesson edited successfully"));
         }catch (Exception e){
             return ResponseEntity.internalServerError().body(ApplicationDto.builder()
                     .result(ResultDto.builder()
