@@ -94,6 +94,21 @@ public class CourseController {
         }
     }
 
+    @DeleteMapping("/{courseId}")
+    public ResponseEntity<ApplicationDto> deleteCourse(@PathVariable Long courseId){
+        try{
+            courseService.deleteCourse(courseId);
+            return ResponseEntity.ok(ApplicationDto.okResult("Course deleted successfully"));
+        }catch (Exception e){
+            return ResponseEntity.internalServerError().body(ApplicationDto.builder()
+                    .result(ResultDto.builder()
+                            .message(e.getLocalizedMessage())
+                            .status("500")
+                            .build())
+                    .build());
+        }
+    }
+
     @PostMapping("/{courseId}/buy")
     public ResponseEntity<ApplicationDto> buyCourse(@PathVariable Long courseId,
                                                     @RequestBody ApplicationDto applicationDto){

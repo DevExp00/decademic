@@ -20,5 +20,7 @@ public interface CourseService {
 
     ApplicationDto getCourses();
 
+    void deleteCourse(Long courseId);
+
     ApplicationDto getCoursesByUserId(Long userId);
 }

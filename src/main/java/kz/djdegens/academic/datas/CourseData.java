@@ -39,4 +39,11 @@ public class CourseData {
         if(Objects.isNull(creatorId))throw new IllegalArgumentException("Creator id can not be null");
         return courseRepository.findAll(Specification.where(CourseSpecification.findByCreatorId(creatorId)).and(CourseSpecification.findByIsActive(true)));
     }
+
+    public void deleteCourse(Long courseId) {
+        if(courseId==null)throw new IllegalArgumentException("Course id can not be null");
+        Optional<Course> optionalCourse = courseRepository.findById(courseId);
+        if(optionalCourse.isEmpty())throw new NoSuchElementException("Course not found");
+        courseRepository.delete(optionalCourse.get());
+    }
 }

@@ -51,6 +51,11 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
+    public void deleteCourse(Long courseId) {
+        courseData.deleteCourse(courseId);
+    }
+
+    @Override
     public void startAttempt(Long courseId,ApplicationDto applicationDto) {
         if (Objects.isNull(applicationDto))throw new IllegalArgumentException("Application dto can not be null");
         if(Objects.isNull(applicationDto.getUser().getLogin()))throw new IllegalArgumentException("User login can not be null");
