@@ -24,6 +24,7 @@ public class CourseDto {
     private Integer rate;
     private Integer countModules;
     private Integer followers;
+    private Boolean isActive;
 
     private List<ModuleDto> modules;
 

@@ -26,4 +26,7 @@ public class LessonDto {
     private Integer order;
 
     private List<QuizDto> quizzes;
+
+    private Boolean isActive;
+
 }

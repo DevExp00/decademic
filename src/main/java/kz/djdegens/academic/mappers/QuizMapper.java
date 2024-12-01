@@ -51,6 +51,7 @@ public class QuizMapper {
         quiz.setTitle(quizDto.getTitle() == null ? quiz.getTitle() : quizDto.getTitle());
         quiz.setOrder(quizDto.getOrder() ==null ? quiz.getOrder() : quizDto.getOrder());
         quiz.setPointsToPass(quizDto.getPointsToPass() == null ? quiz.getPointsToPass() : Integer.valueOf(quizDto.getPointsToPass()));
+        quiz.setIsActive(quizDto.getIsActive() == null ? quiz.getIsActive() : quizDto.getIsActive());
         return quiz;
     }
 }

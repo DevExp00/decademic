@@ -78,21 +78,6 @@ public class CourseController {
         }
     }
 
-    @DeleteMapping("/{courseId}")
-    public ResponseEntity<ApplicationDto> deleteCourse(@PathVariable Long courseId){
-        try{
-            courseService.deleteCourse(courseId);
-            return ResponseEntity.ok(ApplicationDto.okResult("Course deleted successfully"));
-        }catch (Exception e){
-            return ResponseEntity.internalServerError().body(ApplicationDto.builder()
-                    .result(ResultDto.builder()
-                            .message(e.getLocalizedMessage())
-                            .status("500")
-                            .build())
-                    .build());
-        }
-    }
-
     @PutMapping("/{courseId}")
     public ResponseEntity<ApplicationDto> editCourse(@PathVariable Long courseId,
                                                      @RequestBody CourseDto courseDto){

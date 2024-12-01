@@ -1,6 +1,7 @@
 package kz.djdegens.academic.mappers;
 
-import kz.djdegens.academic.datas.interfaces.ModuleData;
+
+import kz.djdegens.academic.datas.ModuleData;
 import kz.djdegens.academic.dtos.CourseDto;
 import kz.djdegens.academic.entities.Course;
 import kz.djdegens.academic.entities.User;
@@ -66,6 +67,7 @@ public class CourseMapper {
         course.setTitle(courseDto.getTitle() == null ? course.getTitle() : courseDto.getTitle());
         course.setDescription(courseDto.getDescription() == null ? course.getDescription() : courseDto.getDescription());
         course.setPointsToPass(courseDto.getPointsToPass() == null ? course.getPointsToPass() : Integer.valueOf(courseDto.getPointsToPass()));
+        course.setIsActive(courseDto.getIsActive() == null ? course.getIsActive() : courseDto.getIsActive());
         return course;
     }
 }

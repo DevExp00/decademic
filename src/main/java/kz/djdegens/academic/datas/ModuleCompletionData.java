@@ -1,30 +1,26 @@
-package kz.djdegens.academic.datas.implementatios;
+package kz.djdegens.academic.datas;
 
-import kz.djdegens.academic.datas.interfaces.ModuleCompletionData;
 import kz.djdegens.academic.entities.ModuleCompletion;
 import kz.djdegens.academic.repositories.ModuleCompletionRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.Optional;
 
 
-@Service
+@Component
 @RequiredArgsConstructor
-public class ModuleCompletionDataImpl implements ModuleCompletionData {
+public class ModuleCompletionData {
 
     private final ModuleCompletionRepository moduleCompletionRepository;
 
-    @Override
     public ModuleCompletion save(ModuleCompletion moduleCompletion) {
         if(Objects.isNull(moduleCompletion))throw new IllegalArgumentException("Module completion can not be null");
         return moduleCompletionRepository.save(moduleCompletion);
     }
 
-
-    @Override
     public ModuleCompletion findById(Long moduleCompletionId) {
         if(Objects.isNull(moduleCompletionId))throw new IllegalArgumentException("Module completion id can not be null");
         Optional<ModuleCompletion> optionalModuleCompletion = moduleCompletionRepository.findById(moduleCompletionId);

@@ -11,4 +11,6 @@ public class AnswerDto {
     private String answer;
     private Long questionId;
     private Boolean isCorrect;
+    private Boolean isActive;
+
 }

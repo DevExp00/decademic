@@ -1,17 +1,15 @@
-package kz.djdegens.academic.datas.implementatios;
+package kz.djdegens.academic.datas;
 
-import kz.djdegens.academic.datas.interfaces.UserStorageData;
 import kz.djdegens.academic.entities.UserStorage;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import java.util.Objects;
 
-@Service
+@Component
 @RequiredArgsConstructor
-public class UserStorageDataImpl implements UserStorageData {
+public class UserStorageData {
 
-    @Override
     public UserStorage save(UserStorage userStorage) {
         if(Objects.isNull(userStorage))throw new IllegalArgumentException("UserStorage can not be null");
 

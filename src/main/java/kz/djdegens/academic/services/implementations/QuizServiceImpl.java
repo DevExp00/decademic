@@ -1,6 +1,6 @@
 package kz.djdegens.academic.services.implementations;
 
-import kz.djdegens.academic.datas.interfaces.*;
+import kz.djdegens.academic.datas.*;
 import kz.djdegens.academic.dtos.AnswerDto;
 import kz.djdegens.academic.dtos.ApplicationDto;
 import kz.djdegens.academic.dtos.QuestionDto;

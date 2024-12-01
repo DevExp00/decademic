@@ -27,6 +27,7 @@ public class QuestionMapper {
         question.setQuestion(questionDto.getQuestion() == null ? question.getQuestion() : questionDto.getQuestion());
         question.setPoints(questionDto.getPoints() == null ? question.getPoints() : questionDto.getPoints());
         question.setIsMultiple(questionDto.getIsMultiple() == null ? question.getIsMultiple() : questionDto.getIsMultiple());
+        question.setIsActive(questionDto.getIsActive() == null ? question.getIsActive() : questionDto.getIsActive());
         return question;
 
     }

@@ -10,8 +10,6 @@ public interface CourseService {
 
     ApplicationDto getCourse(Long courseId);
 
-    void deleteCourse(Long courseId);
-
     void editCourse(Long courseId,CourseDto courseDto);
 
     void buyCourse(Long courseId, ApplicationDto applicationDto);

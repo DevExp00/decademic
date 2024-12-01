@@ -20,4 +20,6 @@ public class QuizDto {
     private Long lessonId;
 
     private List<QuestionDto> questions;
+    private Boolean isActive;
+
 }

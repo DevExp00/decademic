@@ -1,6 +1,6 @@
 package kz.djdegens.academic.services.implementations;
 
-import kz.djdegens.academic.datas.interfaces.*;
+import kz.djdegens.academic.datas.*;
 import kz.djdegens.academic.dtos.*;
 import kz.djdegens.academic.entities.*;
 import kz.djdegens.academic.mappers.QuestionMapper;

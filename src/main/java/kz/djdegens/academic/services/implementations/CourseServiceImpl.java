@@ -1,6 +1,6 @@
 package kz.djdegens.academic.services.implementations;
 
-import kz.djdegens.academic.datas.interfaces.*;
+import kz.djdegens.academic.datas.*;
 import kz.djdegens.academic.dtos.AnswerDto;
 import kz.djdegens.academic.dtos.ApplicationDto;
 import kz.djdegens.academic.dtos.CourseDto;
@@ -114,8 +114,4 @@ public class CourseServiceImpl implements CourseService {
         courseData.save(courseMapper.dtoToEntity(course,dto));
     }
 
-    @Override
-    public void deleteCourse(Long courseId) {
-        courseData.deleteCourse(courseId);
-    }
 }

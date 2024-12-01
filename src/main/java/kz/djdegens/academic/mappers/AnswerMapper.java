@@ -25,6 +25,7 @@ public class AnswerMapper {
         if(Objects.isNull(answer))throw new IllegalArgumentException("Answer can not be null");
         answer.setIsCorrect(answerDto.getIsCorrect() == null ? answer.getIsCorrect() : answerDto.getIsCorrect());
         answer.setAnswer(answerDto.getAnswer() == null ? answer.getAnswer() : answerDto.getAnswer());
+        answer.setIsActive(answerDto.getIsActive() == null ? answer.getIsActive() : answerDto.getIsActive());
         return answer;
 
     }

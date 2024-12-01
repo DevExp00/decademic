@@ -68,6 +68,7 @@ public class ModuleMapper {
         module.setDescription(moduleDto.getDescription() == null ? module.getDescription() : moduleDto.getDescription());
         module.setOrder(moduleDto.getOrderBy() == null ? module.getOrder() : moduleDto.getOrderBy());
         module.setPointsToPass(moduleDto.getPointsToPass() == null ? module.getPointsToPass() : moduleDto.getPointsToPass());
+        module.setIsActive(moduleDto.getIsActive() == null ? module.getIsActive() : moduleDto.getIsActive());
         return module;
     }
 }

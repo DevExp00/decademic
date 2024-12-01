@@ -64,6 +64,7 @@ public class LessonMapper {
         lesson.setContent(lessonDto.getContent() == null ? lesson.getContent() : lessonDto.getContent());
         lesson.setPointsToPass(lessonDto.getPointsToPass() == null ? lesson.getPointsToPass() : lessonDto.getPointsToPass());
         lesson.setOrder(lessonDto.getOrder() == null ? lesson.getOrder() : lessonDto.getOrder());
+        lesson.setIsActive(lessonDto.getIsActive() == null ? lesson.getIsActive() : lessonDto.getIsActive());
         return lesson;
     }
 }

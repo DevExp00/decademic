@@ -15,6 +15,8 @@ public class ModuleDto {
     private Long courseId;
     private Integer pointsToPass;
     private Integer orderBy;
+    private Boolean isActive;
+
 
     private List<LessonDto> lessons;
 }
