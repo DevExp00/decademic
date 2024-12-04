@@ -5,7 +5,7 @@ import kz.djdegens.academic.dtos.QuizDto;
 
 public interface QuizService {
 
-    void addQuiz(QuizDto quizDto);
+    void addQuiz(ApplicationDto applicationDto);
 
     void editQuiz(Long quizId, QuizDto quizDto);
 

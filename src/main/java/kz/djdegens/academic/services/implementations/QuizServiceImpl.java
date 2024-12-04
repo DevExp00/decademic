@@ -7,6 +7,7 @@ import kz.djdegens.academic.dtos.QuestionDto;
 import kz.djdegens.academic.dtos.QuizDto;
 import kz.djdegens.academic.entities.*;
 import kz.djdegens.academic.mappers.QuizMapper;
+import kz.djdegens.academic.services.interfaces.QuestionService;
 import kz.djdegens.academic.services.interfaces.QuizService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -27,12 +28,20 @@ public class QuizServiceImpl implements QuizService {
     private final LessonCompletionData lessonCompletionData;
     private final QuizCompletionData quizCompletionData;
     private final AnswerData answerData;
+    private final QuestionService questionService;
 
 
     @Override
-    public void addQuiz(QuizDto quizDto) {
+    public void addQuiz(ApplicationDto applicationDto) {
+        if(Objects.isNull(applicationDto.getQuiz()))throw new IllegalArgumentException("Quiz dto can not be null");
+        QuizDto quizDto = applicationDto.getQuiz();
         Lesson lesson = lessonData.findById(quizDto.getLessonId());
-        quizData.save(quizMapper.dtoToEntity(quizDto, lesson));
+        Quiz quiz = quizData.save(quizMapper.dtoToEntity(quizDto, lesson));
+        for(QuestionDto dto : applicationDto.getQuestions()){
+            dto.setQuizId(quiz.getId());
+            questionService.addQuestion(dto);
+        }
+
     }
 
     @Override

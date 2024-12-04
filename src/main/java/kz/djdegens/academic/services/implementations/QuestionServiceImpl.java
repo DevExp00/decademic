@@ -31,13 +31,12 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Override
     @Transactional
-    public void addQuestion(ApplicationDto application) {
-        if(Objects.isNull(application.getQuestion()))throw new IllegalArgumentException("Question dto can not be null");
-        if(Objects.isNull(application.getAnswers()))throw new IllegalArgumentException("Answers dto can not be null");
-        QuestionDto questionDto = application.getQuestion();
+    public void addQuestion(QuestionDto questionDto) {
+        if(Objects.isNull(questionDto))throw new IllegalArgumentException("Question dto can not be null");
+        if(Objects.isNull(questionDto.getAnswers()))throw new IllegalArgumentException("Answers dto can not be null");
         Quiz quiz = quizData.findById(questionDto.getQuizId());
         Question question = questionData.save(questionMapper.dtoToEntity(questionDto,quiz));
-        for(AnswerDto answerDto : application.getAnswers()){
+        for(AnswerDto answerDto : questionDto.getAnswers()){
             answerDto.setQuestionId(question.getId());
             answerService.addAnswer(answerDto);
         }

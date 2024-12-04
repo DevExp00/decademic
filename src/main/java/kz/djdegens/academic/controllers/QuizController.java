@@ -16,9 +16,9 @@ public class QuizController {
     private final QuizService quizService;
 
     @PostMapping("/quiz")
-    public ResponseEntity<ApplicationDto> addQuiz(@RequestBody QuizDto quizDto){
+    public ResponseEntity<ApplicationDto> addQuiz(@RequestBody ApplicationDto applicationDto){
         try{
-            quizService.addQuiz(quizDto);
+            quizService.addQuiz(applicationDto);
             return ResponseEntity.ok(ApplicationDto.okResult("Quiz added successfully"));
         }catch (Exception e){
             return ResponseEntity.internalServerError().body(ApplicationDto.builder()
