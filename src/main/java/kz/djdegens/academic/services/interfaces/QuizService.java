@@ -7,7 +7,7 @@ public interface QuizService {
 
     void addQuiz(ApplicationDto applicationDto);
 
-    void editQuiz(Long quizId, QuizDto quizDto);
+    void editQuiz(Long quizId, ApplicationDto applicationDto);
 
     void startAttempt(Long quizId, ApplicationDto applicationDto);
 

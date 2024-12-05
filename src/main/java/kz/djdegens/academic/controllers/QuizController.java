@@ -67,9 +67,9 @@ public class QuizController {
 
     @PutMapping("/{quizId}")
     public ResponseEntity<ApplicationDto> editQuiz(@PathVariable Long quizId,
-                                                   @RequestBody QuizDto quizDto){
+                                                   @RequestBody ApplicationDto applicationDto){
         try{
-            quizService.editQuiz(quizId, quizDto);
+            quizService.editQuiz(quizId, applicationDto);
             return ResponseEntity.ok(ApplicationDto.okResult("Quiz edited successfully"));
         }catch (Exception e){
             return ResponseEntity.internalServerError().body(ApplicationDto.builder()

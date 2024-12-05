@@ -11,6 +11,7 @@ import kz.djdegens.academic.services.interfaces.QuestionService;
 import kz.djdegens.academic.services.interfaces.QuizService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -89,8 +90,15 @@ public class QuizServiceImpl implements QuizService {
     }
 
     @Override
-    public void editQuiz(Long quizId, QuizDto quizDto) {
+    @Transactional
+    public void editQuiz(Long quizId, ApplicationDto applicationDto) {
+        if(Objects.isNull(applicationDto.getQuiz()))throw new IllegalArgumentException("Quiz dto can not be null");
+        QuizDto quizDto = applicationDto.getQuiz();
         Quiz quiz = quizData.findById(quizId);
+        for(QuestionDto dto : applicationDto.getQuestions()){
+            questionService.editQuestion(dto);
+        }
         quizData.save(quizMapper.dtoToEntity(quiz,quizDto));
+
     }
 }

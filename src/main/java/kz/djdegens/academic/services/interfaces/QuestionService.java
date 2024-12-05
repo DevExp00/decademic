@@ -11,7 +11,7 @@ public interface QuestionService {
 
     void addQuestion(QuestionDto questionDto);
 
-    void editQuestion(Long questionId, ApplicationDto applicationDto);
+    void editQuestion(QuestionDto questionDto);
 
     ApplicationDto attemptQuestion(ApplicationDto applicationDto);
 }

@@ -87,11 +87,12 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Override
     @Transactional
-    public void editQuestion(Long questionId, ApplicationDto applicationDto){
-        Question question = questionData.findById(questionId);
-        for(AnswerDto answerDto : applicationDto.getAnswers()){
-            answerService.editAnswer(answerDto.getId(),answerDto);
+    public void editQuestion(QuestionDto questionDto){
+        if(Objects.isNull(questionDto))throw new IllegalArgumentException("Question dto can not be null");
+        Question question = questionData.findById(questionDto.getId());
+        for(AnswerDto answerDto : questionDto.getAnswers()){
+            answerService.editAnswer(answerDto);
         }
-        questionData.save(questionMapper.dtoToEntity(question,applicationDto.getQuestion()));
+        questionData.save(questionMapper.dtoToEntity(question,questionDto));
     }
 }
