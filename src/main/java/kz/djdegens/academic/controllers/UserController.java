@@ -35,26 +35,10 @@ public class UserController {
         }
     }
 
-
-    @GetMapping("/{userId}")
-    public ResponseEntity<ApplicationDto> getUser(@PathVariable Long userId){
-        try{
-            return ResponseEntity.ok().body(userService.getUser(userId));
-        }catch (Exception e){
-            return ResponseEntity.internalServerError().body(ApplicationDto.builder()
-                    .result(ResultDto.builder()
-                            .message(e.getLocalizedMessage())
-                            .status("500")
-                            .build())
-                    .build());
-        }
-    }
-
     @GetMapping("/user-info")
-    public ResponseEntity<ApplicationDto> getUser(@RequestParam Long telegramId,
-                                                  @RequestParam Boolean isInstructor){
+    public ResponseEntity<ApplicationDto> getUser(@RequestParam Boolean isInstructor){
         try{
-            return ResponseEntity.ok().body(userService.getUserByTelegramIdAndIsInstructor(telegramId,isInstructor));
+            return ResponseEntity.ok().body(userService.getUserByTelegramIdAndIsInstructor(isInstructor));
         }catch (Exception e){
             return ResponseEntity.internalServerError().body(ApplicationDto.builder()
                     .result(ResultDto.builder()

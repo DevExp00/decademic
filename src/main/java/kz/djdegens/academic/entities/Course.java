@@ -1,6 +1,6 @@
 package kz.djdegens.academic.entities;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
 import jdk.jfr.Timestamp;
 import lombok.AllArgsConstructor;
 import lombok.Data;

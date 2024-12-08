@@ -7,6 +7,7 @@ import kz.djdegens.academic.dtos.QuestionDto;
 import kz.djdegens.academic.dtos.QuizDto;
 import kz.djdegens.academic.entities.*;
 import kz.djdegens.academic.mappers.QuizMapper;
+import kz.djdegens.academic.services.interfaces.KeycloakService;
 import kz.djdegens.academic.services.interfaces.QuestionService;
 import kz.djdegens.academic.services.interfaces.QuizService;
 import lombok.RequiredArgsConstructor;
@@ -30,6 +31,7 @@ public class QuizServiceImpl implements QuizService {
     private final QuizCompletionData quizCompletionData;
     private final AnswerData answerData;
     private final QuestionService questionService;
+    private final KeycloakService keycloakService;
 
 
     @Override
@@ -50,7 +52,7 @@ public class QuizServiceImpl implements QuizService {
         if(Objects.isNull(quizId))throw new IllegalArgumentException("Quiz id can not be null");
         if(Objects.isNull(applicationDto.getUser()))throw new IllegalArgumentException("User can not be null");
         if(Objects.isNull(applicationDto.getLessonCompletion()))throw new IllegalArgumentException("Lesson completion can not be null");
-        User user = userData.findById(applicationDto.getUser().getId());
+        User user = userData.findByTelegramIdAndRole(Long.valueOf(keycloakService.getPreferredUsername()),"student");
         if(user.getRole().equals("instructor"))throw new RuntimeException("Instructor can not start course");
         QuizCompletion quizCompletion = new QuizCompletion();
         quizCompletion.setUser(user);

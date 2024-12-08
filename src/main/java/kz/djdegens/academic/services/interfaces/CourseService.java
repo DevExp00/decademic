@@ -14,7 +14,7 @@ public interface CourseService {
 
     void buyCourse(Long courseId, ApplicationDto applicationDto);
 
-    void startAttempt(Long courseId,ApplicationDto applicationDto);
+    void startAttempt(Long courseId);
 
     void handleCourseCompletion(ModuleCompletion moduleCompletion);
 
@@ -22,5 +22,5 @@ public interface CourseService {
 
     void deleteCourse(Long courseId);
 
-    ApplicationDto getCoursesByUserId(Long userId);
+    ApplicationDto getCoursesByUserId();
 }

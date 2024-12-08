@@ -1,7 +1,7 @@
 package kz.djdegens.academic.repositories.specifications;
 
-import jakarta.persistence.criteria.Join;
-import jakarta.persistence.criteria.JoinType;
+import javax.persistence.criteria.Join;
+import javax.persistence.criteria.JoinType;
 import kz.djdegens.academic.entities.Course;
 import kz.djdegens.academic.entities.Module;
 import org.springframework.data.jpa.domain.Specification;

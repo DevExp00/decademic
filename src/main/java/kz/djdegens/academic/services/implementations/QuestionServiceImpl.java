@@ -5,6 +5,7 @@ import kz.djdegens.academic.dtos.*;
 import kz.djdegens.academic.entities.*;
 import kz.djdegens.academic.mappers.QuestionMapper;
 import kz.djdegens.academic.services.interfaces.AnswerService;
+import kz.djdegens.academic.services.interfaces.KeycloakService;
 import kz.djdegens.academic.services.interfaces.LessonService;
 import kz.djdegens.academic.services.interfaces.QuestionService;
 import lombok.RequiredArgsConstructor;
@@ -28,6 +29,7 @@ public class QuestionServiceImpl implements QuestionService {
     private final UserData userData;
     private final LessonService lessonService;
     private final AnswerService answerService;
+    private final KeycloakService keycloakService;
 
     @Override
     @Transactional
@@ -45,12 +47,11 @@ public class QuestionServiceImpl implements QuestionService {
     @Override
     public ApplicationDto attemptQuestion(ApplicationDto applicationDto) {
         if(Objects.isNull(applicationDto.getQuestions()))throw new IllegalArgumentException("Questions can not be null");
-        if(Objects.isNull(applicationDto.getQuizCompletion()))throw new IllegalArgumentException("Quiz completion can not be null");
         if(Objects.isNull(applicationDto.getUser()))throw new IllegalArgumentException("User can not be null");
 
         QuizCompletion quizCompletion = quizCompletionData.findById(applicationDto.getQuizCompletion().getId());
         Quiz quiz = quizData.findById(quizCompletion.getQuiz().getId());
-        User student = userData.findById(applicationDto.getUser().getId());
+        User student = userData.findByTelegramIdAndRole(Long.valueOf(keycloakService.getPreferredUsername()),"student");
         List<QuestionDto> questionDtos = applicationDto.getQuestions();
         Integer points = quizCompletion.getScore();
         for(QuestionDto questionDto : questionDtos){

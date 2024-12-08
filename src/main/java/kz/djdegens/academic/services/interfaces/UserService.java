@@ -6,6 +6,5 @@ import kz.djdegens.academic.dtos.UserDto;
 public interface UserService {
 
     void checkUser(UserDto userDto);
-    ApplicationDto getUser(Long userId);
-    ApplicationDto getUserByTelegramIdAndIsInstructor(Long telegramId, Boolean isInstructor);
+    ApplicationDto getUserByTelegramIdAndIsInstructor(Boolean isInstructor);
 }

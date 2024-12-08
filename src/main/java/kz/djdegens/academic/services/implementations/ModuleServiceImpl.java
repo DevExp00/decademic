@@ -9,6 +9,7 @@ import kz.djdegens.academic.entities.Module;
 import kz.djdegens.academic.mappers.LessonMapper;
 import kz.djdegens.academic.mappers.ModuleMapper;
 import kz.djdegens.academic.services.interfaces.CourseService;
+import kz.djdegens.academic.services.interfaces.KeycloakService;
 import kz.djdegens.academic.services.interfaces.ModuleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -30,6 +31,7 @@ public class ModuleServiceImpl implements ModuleService {
     private final UserData userData;
     private final ModuleCompletionData moduleCompletionData;
     private final CourseService courseService;
+    private final KeycloakService keycloakService;
 
     @Override
     public void addModule(ModuleDto moduleDto) {
@@ -53,7 +55,7 @@ public class ModuleServiceImpl implements ModuleService {
         if(Objects.isNull(applicationDto.getCourseCompletion().getId()))throw new IllegalArgumentException("Course completion id can not be null");
         if(Objects.isNull(applicationDto.getUser()))throw new IllegalArgumentException("Student can not be null");
         Module module = moduleData.findById(moduleId);
-        User student = userData.findById(applicationDto.getUser().getId());
+        User student = userData.findByTelegramIdAndRole(Long.valueOf(keycloakService.getPreferredUsername()),"student");
         if(student.getRole().equals("instructor"))throw new RuntimeException("Instructor can not start module");
         CourseCompletion courseCompletion = courseCompletionData.findById(applicationDto.getCourseCompletion().getId());
         ModuleCompletion moduleCompletion = new ModuleCompletion();

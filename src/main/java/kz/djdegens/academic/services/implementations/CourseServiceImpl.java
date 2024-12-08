@@ -13,6 +13,7 @@ import kz.djdegens.academic.mappers.ModuleMapper;
 import kz.djdegens.academic.mappers.UserMapper;
 import kz.djdegens.academic.repositories.UserStorageRepository;
 import kz.djdegens.academic.services.interfaces.CourseService;
+import kz.djdegens.academic.services.interfaces.KeycloakService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -31,11 +32,12 @@ public class CourseServiceImpl implements CourseService {
     private final CourseCompletionData courseCompletionData;
     private final UserStorageData userStorageData;
     private final UserStorageRepository userStorageRepository;
+    private final KeycloakService keycloakService;
 
     @Override
     public void addCourse(CourseDto courseDto) {
         if(courseDto.getCreatorId()==null)throw new IllegalArgumentException("Creator id can not be null");
-        User creator = userData.findById(courseDto.getCreatorId());
+        User creator = userData.findByTelegramIdAndRole(Long.valueOf(keycloakService.getPreferredUsername()),"instructor");
         Course course = courseMapper.dtoToEntity(courseDto, creator);
         courseData.save(course);
     }
@@ -56,12 +58,10 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public void startAttempt(Long courseId,ApplicationDto applicationDto) {
-        if (Objects.isNull(applicationDto))throw new IllegalArgumentException("Application dto can not be null");
-        if(Objects.isNull(applicationDto.getUser().getLogin()))throw new IllegalArgumentException("User login can not be null");
+    public void startAttempt(Long courseId) {
         if(Objects.isNull(courseId))throw new IllegalArgumentException("Course id can not be null");
         Course course = courseData.findById(courseId);
-        User student = userData.findById(applicationDto.getUser().getId());
+        User student = userData.findByTelegramIdAndRole(Long.valueOf(keycloakService.getPreferredUsername()),"student");
         if(Objects.isNull(userStorageRepository.findByCourseIdAndStudentId(course.getId(), student.getId()))){
             throw new RuntimeException("User have no access to course");
         }
@@ -88,7 +88,7 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public void buyCourse(Long courseId, ApplicationDto applicationDto) {
         if(Objects.isNull(applicationDto.getUser()))throw new IllegalArgumentException("User dto can not be null");
-        User user = userData.findById(applicationDto.getUser().getId());
+        User user = userData.findByTelegramIdAndRole(Long.valueOf(keycloakService.getPreferredUsername()),"student");
         Course course = courseData.findById(courseId);
         UserStorage userStorage = new UserStorage();
         userStorage.setStudent(user);
@@ -105,8 +105,8 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public ApplicationDto getCoursesByUserId(Long userId) {
-        User user = userData.findById(userId);
+    public ApplicationDto getCoursesByUserId() {
+        User user = userData.findByTelegramIdAndRole(Long.valueOf(keycloakService.getPreferredUsername()),"instructor");
         List<Course> courses = courseData.findAllByCreatorId(user.getId());
         return ApplicationDto.builder()
                 .courses(courseMapper.entityToDto(courses))

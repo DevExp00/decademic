@@ -31,9 +31,9 @@ public class CourseController {
     }
 
     @PostMapping("/{courseId}/attempt")
-    public ResponseEntity<ApplicationDto> startAttempt(@PathVariable Long courseId,@RequestBody ApplicationDto applicationDto){
+    public ResponseEntity<ApplicationDto> startAttempt(@PathVariable Long courseId){
         try{
-            courseService.startAttempt(courseId,applicationDto);
+            courseService.startAttempt(courseId);
             return ResponseEntity.ok().body(ApplicationDto.builder()
                     .result(ResultDto.builder()
                             .status("200")
@@ -51,9 +51,9 @@ public class CourseController {
     }
 
     @GetMapping("/by-user")
-    public ResponseEntity<ApplicationDto> getCoursesByUserId(@RequestParam Long userId){
+    public ResponseEntity<ApplicationDto> getCoursesByUserId(){
         try{
-            return ResponseEntity.ok(courseService.getCoursesByUserId(userId));
+            return ResponseEntity.ok(courseService.getCoursesByUserId());
         }catch (Exception e){
             return ResponseEntity.internalServerError().body(ApplicationDto.builder()
                     .result(ResultDto.builder()

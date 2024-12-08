@@ -5,6 +5,7 @@ import kz.djdegens.academic.dtos.ApplicationDto;
 import kz.djdegens.academic.dtos.UserDto;
 import kz.djdegens.academic.entities.User;
 import kz.djdegens.academic.mappers.UserMapper;
+import kz.djdegens.academic.services.interfaces.KeycloakService;
 import kz.djdegens.academic.services.interfaces.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,7 @@ public class UserServiceImpl implements UserService {
 
     private final UserMapper userMapper;
     private final UserData userData;
+    private final KeycloakService keycloakService;
     @Override
     public void checkUser(UserDto userDto) {
         if(Objects.isNull(userDto))throw new IllegalArgumentException("Student dto can not be null");
@@ -31,17 +33,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public ApplicationDto getUser(Long userId) {
-        User user = userData.findById(userId);
-        UserDto userDto = userMapper.entityToDto(user);
-        return ApplicationDto.builder()
-                .user(userDto)
-                .build();
-    }
-
-    @Override
-    public ApplicationDto getUserByTelegramIdAndIsInstructor(Long telegramId, Boolean isInstructor) {
-        User user = userData.findByTelegramIdAndRole(telegramId, isInstructor ? "instructor" : "student");
+    public ApplicationDto getUserByTelegramIdAndIsInstructor(Boolean isInstructor) {
+        User user = userData.findByTelegramIdAndRole(Long.valueOf(keycloakService.getPreferredUsername()), isInstructor ? "instructor" : "student");
         UserDto userDto = userMapper.entityToDto(user);
         return ApplicationDto.builder()
                 .user(userDto)

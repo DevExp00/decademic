@@ -8,6 +8,7 @@ import kz.djdegens.academic.entities.Module;
 import kz.djdegens.academic.mappers.LessonMapper;
 import kz.djdegens.academic.mappers.ModuleMapper;
 import kz.djdegens.academic.mappers.QuizMapper;
+import kz.djdegens.academic.services.interfaces.KeycloakService;
 import kz.djdegens.academic.services.interfaces.LessonService;
 import kz.djdegens.academic.services.interfaces.ModuleService;
 import lombok.RequiredArgsConstructor;
@@ -31,6 +32,7 @@ public class LessonServiceImpl implements LessonService {
     private final ModuleService moduleService;
     private final QuizMapper quizMapper;
     private final QuizData quizData;
+    private final KeycloakService keycloakService;
 
     @Override
     public void addLesson(LessonDto lessonDto) {
@@ -44,7 +46,7 @@ public class LessonServiceImpl implements LessonService {
         if(Objects.isNull(lessonId))throw new IllegalArgumentException("Lesson id can not be null");
         if(Objects.isNull(applicationDto.getUser()))throw new IllegalArgumentException("User can not be null");
         if(Objects.isNull(applicationDto.getModuleCompletion()))throw new IllegalArgumentException("Module completion can not be null");
-        User student = userData.findById(applicationDto.getUser().getId());
+        User student = userData.findByTelegramIdAndRole(Long.valueOf(keycloakService.getPreferredUsername()),"student");
         if(student.getRole().equals("instructor"))throw new RuntimeException("Instructor can not start lesson");
         LessonCompletion lessonCompletion = new LessonCompletion();
         lessonCompletion.setModuleCompletion(moduleCompletionData.findById(applicationDto.getModuleCompletion().getId()));
