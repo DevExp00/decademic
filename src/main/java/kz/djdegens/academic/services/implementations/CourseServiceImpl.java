@@ -36,7 +36,6 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public void addCourse(CourseDto courseDto) {
-        if(courseDto.getCreatorId()==null)throw new IllegalArgumentException("Creator id can not be null");
         User creator = userData.findByTelegramIdAndRole(Long.valueOf(keycloakService.getPreferredUsername()),"instructor");
         Course course = courseMapper.dtoToEntity(courseDto, creator);
         courseData.save(course);
