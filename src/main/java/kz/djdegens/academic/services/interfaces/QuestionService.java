@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface QuestionService {
 
-    void addQuestion(QuestionDto questionDto);
+    ApplicationDto addQuestion(QuestionDto questionDto);
 
     void editQuestion(Long questionId,QuestionDto questionDto);
 

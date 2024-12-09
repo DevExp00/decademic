@@ -33,7 +33,7 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Override
     @Transactional
-    public void addQuestion(QuestionDto questionDto) {
+    public ApplicationDto addQuestion(QuestionDto questionDto) {
         if(Objects.isNull(questionDto))throw new IllegalArgumentException("Question dto can not be null");
         Quiz quiz = quizData.findById(questionDto.getQuizId());
         Question question = questionData.save(questionMapper.dtoToEntity(questionDto,quiz));
@@ -41,6 +41,11 @@ public class QuestionServiceImpl implements QuestionService {
             answerDto.setQuestionId(question.getId());
             answerService.addAnswer(answerDto);
         }
+        return ApplicationDto.builder()
+                .question(QuestionDto.builder()
+                        .id(question.getId())
+                        .build())
+                .build();
     }
 
     @Override

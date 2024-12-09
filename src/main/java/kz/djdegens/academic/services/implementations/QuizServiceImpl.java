@@ -35,9 +35,14 @@ public class QuizServiceImpl implements QuizService {
 
 
     @Override
-    public void addQuiz(QuizDto quizDto) {
+    public ApplicationDto addQuiz(QuizDto quizDto) {
         Lesson lesson = lessonData.findById(quizDto.getLessonId());
-        quizData.save(quizMapper.dtoToEntity(quizDto, lesson));
+        Quiz quiz = quizData.save(quizMapper.dtoToEntity(quizDto, lesson));
+        return ApplicationDto.builder()
+                .quiz(QuizDto.builder()
+                        .id(quiz.getId())
+                        .build())
+                .build();
     }
 
     @Override
