@@ -33,13 +33,11 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Override
     @Transactional
-    public void addQuestion(ApplicationDto application) {
-        if(Objects.isNull(application.getQuestion()))throw new IllegalArgumentException("Question dto can not be null");
-        if(Objects.isNull(application.getAnswers()))throw new IllegalArgumentException("Answers dto can not be null");
-        QuestionDto questionDto = application.getQuestion();
+    public void addQuestion(QuestionDto questionDto) {
+        if(Objects.isNull(questionDto))throw new IllegalArgumentException("Question dto can not be null");
         Quiz quiz = quizData.findById(questionDto.getQuizId());
         Question question = questionData.save(questionMapper.dtoToEntity(questionDto,quiz));
-        for(AnswerDto answerDto : application.getAnswers()){
+        for(AnswerDto answerDto : questionDto.getAnswers()){
             answerDto.setQuestionId(question.getId());
             answerService.addAnswer(answerDto);
         }
@@ -89,12 +87,12 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Override
     @Transactional
-    public void editQuestion(Long questionId, ApplicationDto applicationDto){
+    public void editQuestion(Long questionId, QuestionDto questionDto){
         Question question = questionData.findById(questionId);
-        for(AnswerDto answerDto : applicationDto.getAnswers()){
+        for(AnswerDto answerDto : questionDto.getAnswers()){
             answerService.editAnswer(answerDto.getId(),answerDto);
         }
-        questionData.save(questionMapper.dtoToEntity(question,applicationDto.getQuestion()));
+        questionData.save(questionMapper.dtoToEntity(question,questionDto));
     }
 
     @Override

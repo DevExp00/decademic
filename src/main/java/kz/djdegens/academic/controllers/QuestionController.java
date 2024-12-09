@@ -2,6 +2,7 @@ package kz.djdegens.academic.controllers;
 
 import kz.djdegens.academic.dtos.ApplicationDto;
 import kz.djdegens.academic.dtos.QuestionDto;
+import kz.djdegens.academic.dtos.QuizDto;
 import kz.djdegens.academic.dtos.ResultDto;
 import kz.djdegens.academic.services.interfaces.QuestionService;
 import lombok.RequiredArgsConstructor;
@@ -16,9 +17,9 @@ public class QuestionController {
     private final QuestionService questionService;
 
     @PostMapping("/question")
-    public ResponseEntity<ApplicationDto> addQuestion(@RequestBody ApplicationDto application){
+    public ResponseEntity<ApplicationDto> addQuestion(@RequestBody QuestionDto questionDto){
         try{
-            questionService.addQuestion(application);
+            questionService.addQuestion(questionDto);
             return ResponseEntity.ok(ApplicationDto.okResult("Question added successfully"));
         }catch (Exception e){
             return ResponseEntity.internalServerError().body(ApplicationDto.builder()
@@ -46,9 +47,9 @@ public class QuestionController {
 
     @PutMapping("/{questionId}")
     public ResponseEntity<ApplicationDto> editQuestion(@PathVariable Long questionId,
-                                                       @RequestBody ApplicationDto applicationDto){
+                                                       @RequestBody QuestionDto questionDto){
         try{
-            questionService.editQuestion(questionId,applicationDto);
+            questionService.editQuestion(questionId, questionDto);
             return ResponseEntity.ok(ApplicationDto.okResult("Question edited successfully"));
         }catch (Exception e){
             return ResponseEntity.internalServerError().body(ApplicationDto.builder()

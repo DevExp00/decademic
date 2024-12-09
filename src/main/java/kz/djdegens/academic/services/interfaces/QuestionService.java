@@ -9,9 +9,9 @@ import java.util.List;
 
 public interface QuestionService {
 
-    void addQuestion(ApplicationDto application);
+    void addQuestion(QuestionDto questionDto);
 
-    void editQuestion(Long questionId,ApplicationDto applicationDto);
+    void editQuestion(Long questionId,QuestionDto questionDto);
 
     ApplicationDto attemptQuestion(ApplicationDto applicationDto);
 
