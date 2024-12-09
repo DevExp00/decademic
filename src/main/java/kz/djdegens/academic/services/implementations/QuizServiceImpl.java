@@ -35,16 +35,9 @@ public class QuizServiceImpl implements QuizService {
 
 
     @Override
-    public void addQuiz(ApplicationDto applicationDto) {
-        if(Objects.isNull(applicationDto.getQuiz()))throw new IllegalArgumentException("Quiz dto can not be null");
-        QuizDto quizDto = applicationDto.getQuiz();
+    public void addQuiz(QuizDto quizDto) {
         Lesson lesson = lessonData.findById(quizDto.getLessonId());
-        Quiz quiz = quizData.save(quizMapper.dtoToEntity(quizDto, lesson));
-        for(QuestionDto dto : applicationDto.getQuestions()){
-            dto.setQuizId(quiz.getId());
-            questionService.addQuestion(dto);
-        }
-
+        quizData.save(quizMapper.dtoToEntity(quizDto, lesson));
     }
 
     @Override
@@ -65,42 +58,15 @@ public class QuizServiceImpl implements QuizService {
     @Override
     public ApplicationDto getQuiz(Long quizId) {
         Quiz quiz = quizData.findById(quizId);
-        List<Question> questions = questionData.findAllByQuizId(quizId);
-        List<QuestionDto> questionDtos = new ArrayList<>();
-        for(Question question : questions){
-            QuestionDto questionDto = new QuestionDto();
-            questionDto.setId(question.getId());
-            questionDto.setQuestion(question.getQuestion() == null ? null : question.getQuestion());
-            questionDto.setIsMultiple(question.getIsMultiple() == null ? null : question.getIsMultiple());
-            questionDto.setPoints(question.getPoints() == null ? null : question.getPoints());
-            List<AnswerDto> answerDtos = new ArrayList<>();
-            for(Answer answer : answerData.findAllByQuestionId(question.getId())){
-                AnswerDto answerDto = new AnswerDto();
-                answerDto.setId(answer.getId());
-                answerDto.setAnswer(answer.getAnswer() == null ? null : answer.getAnswer());
-                answerDto.setIsCorrect(answer.getIsCorrect() == null ? null : answer.getIsCorrect());
-                answerDtos.add(answerDto);
-            }
-            questionDto.setAnswers(answerDtos);
-            questionDtos.add(questionDto);
-        }
         QuizDto quizDto = quizMapper.entityToDto(quiz);
         return ApplicationDto.builder()
                 .quiz(quizDto)
-                .questions(questionDtos)
                 .build();
     }
 
     @Override
-    @Transactional
-    public void editQuiz(Long quizId, ApplicationDto applicationDto) {
-        if(Objects.isNull(applicationDto.getQuiz()))throw new IllegalArgumentException("Quiz dto can not be null");
-        QuizDto quizDto = applicationDto.getQuiz();
+    public void editQuiz(Long quizId, QuizDto quizDto) {
         Quiz quiz = quizData.findById(quizId);
-        for(QuestionDto dto : applicationDto.getQuestions()){
-            questionService.editQuestion(dto);
-        }
         quizData.save(quizMapper.dtoToEntity(quiz,quizDto));
-
     }
 }

@@ -33,12 +33,13 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Override
     @Transactional
-    public void addQuestion(QuestionDto questionDto) {
-        if(Objects.isNull(questionDto))throw new IllegalArgumentException("Question dto can not be null");
-        if(Objects.isNull(questionDto.getAnswers()))throw new IllegalArgumentException("Answers dto can not be null");
+    public void addQuestion(ApplicationDto application) {
+        if(Objects.isNull(application.getQuestion()))throw new IllegalArgumentException("Question dto can not be null");
+        if(Objects.isNull(application.getAnswers()))throw new IllegalArgumentException("Answers dto can not be null");
+        QuestionDto questionDto = application.getQuestion();
         Quiz quiz = quizData.findById(questionDto.getQuizId());
         Question question = questionData.save(questionMapper.dtoToEntity(questionDto,quiz));
-        for(AnswerDto answerDto : questionDto.getAnswers()){
+        for(AnswerDto answerDto : application.getAnswers()){
             answerDto.setQuestionId(question.getId());
             answerService.addAnswer(answerDto);
         }
@@ -88,12 +89,37 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Override
     @Transactional
-    public void editQuestion(QuestionDto questionDto){
-        if(Objects.isNull(questionDto))throw new IllegalArgumentException("Question dto can not be null");
-        Question question = questionData.findById(questionDto.getId());
-        for(AnswerDto answerDto : questionDto.getAnswers()){
-            answerService.editAnswer(answerDto);
+    public void editQuestion(Long questionId, ApplicationDto applicationDto){
+        Question question = questionData.findById(questionId);
+        for(AnswerDto answerDto : applicationDto.getAnswers()){
+            answerService.editAnswer(answerDto.getId(),answerDto);
         }
-        questionData.save(questionMapper.dtoToEntity(question,questionDto));
+        questionData.save(questionMapper.dtoToEntity(question,applicationDto.getQuestion()));
+    }
+
+    @Override
+    public ApplicationDto getQuestions(Long quizId) {
+        List<Question> questions = questionData.findAllByQuizId(quizId);
+        List<QuestionDto> questionDtos = new ArrayList<>();
+        for(Question question : questions){
+            QuestionDto questionDto = new QuestionDto();
+            questionDto.setId(question.getId());
+            questionDto.setQuestion(question.getQuestion() == null ? null : question.getQuestion());
+            questionDto.setIsMultiple(question.getIsMultiple() == null ? null : question.getIsMultiple());
+            questionDto.setPoints(question.getPoints() == null ? null : question.getPoints());
+            List<AnswerDto> answerDtos = new ArrayList<>();
+            for(Answer answer : answerData.findAllByQuestionId(question.getId())){
+                AnswerDto answerDto = new AnswerDto();
+                answerDto.setId(answer.getId());
+                answerDto.setAnswer(answer.getAnswer() == null ? null : answer.getAnswer());
+                answerDto.setIsCorrect(answer.getIsCorrect() == null ? null : answer.getIsCorrect());
+                answerDtos.add(answerDto);
+            }
+            questionDto.setAnswers(answerDtos);
+            questionDtos.add(questionDto);
+        }
+        return ApplicationDto.builder()
+                .questions(questionDtos)
+                .build();
     }
 }

@@ -7,5 +7,5 @@ public interface AnswerService {
 
     ApplicationDto addAnswer(AnswerDto answerDto);
 
-    void editAnswer(AnswerDto answerDto);
+    void editAnswer(Long id,AnswerDto answerDto);
 }

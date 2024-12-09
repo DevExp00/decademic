@@ -16,16 +16,16 @@ public class QuizController {
     private final QuizService quizService;
 
     @PostMapping("/quiz")
-    public ResponseEntity<ApplicationDto> addQuiz(@RequestBody ApplicationDto applicationDto){
+    public ResponseEntity<ApplicationDto> addQuiz(@RequestBody QuizDto quizDto){
         try{
-            quizService.addQuiz(applicationDto);
+            quizService.addQuiz(quizDto);
             return ResponseEntity.ok(ApplicationDto.okResult("Quiz added successfully"));
         }catch (Exception e){
             return ResponseEntity.internalServerError().body(ApplicationDto.builder()
-                            .result(ResultDto.builder()
-                                    .message(e.getLocalizedMessage())
-                                    .status("500")
-                                    .build())
+                    .result(ResultDto.builder()
+                            .message(e.getLocalizedMessage())
+                            .status("500")
+                            .build())
                     .build());
         }
     }
@@ -67,9 +67,9 @@ public class QuizController {
 
     @PutMapping("/{quizId}")
     public ResponseEntity<ApplicationDto> editQuiz(@PathVariable Long quizId,
-                                                   @RequestBody ApplicationDto applicationDto){
+                                                   @RequestBody QuizDto quizDto){
         try{
-            quizService.editQuiz(quizId, applicationDto);
+            quizService.editQuiz(quizId, quizDto);
             return ResponseEntity.ok(ApplicationDto.okResult("Quiz edited successfully"));
         }catch (Exception e){
             return ResponseEntity.internalServerError().body(ApplicationDto.builder()

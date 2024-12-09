@@ -35,9 +35,8 @@ public class AnswerServiceImpl implements AnswerService {
     }
 
     @Override
-    public void editAnswer(AnswerDto answerDto) {
-        if(Objects.isNull(answerDto))throw new IllegalArgumentException("Answer dto can not be mull");
-        Answer answer = answerData.findById(answerDto.getId());
+    public void editAnswer(Long answerId, AnswerDto answerDto) {
+        Answer answer = answerData.findById(answerId);
         answerData.save(answerMapper.dtoToEntity(answer,answerDto));
     }
 }
