@@ -95,6 +95,7 @@ public class QuestionServiceImpl implements QuestionService {
     public void editQuestion(Long questionId, QuestionDto questionDto){
         Question question = questionData.findById(questionId);
         for(AnswerDto answerDto : questionDto.getAnswers()){
+            answerDto.setQuestionId(questionId);
             answerService.editAnswer(answerDto.getId(),answerDto);
         }
         questionData.save(questionMapper.dtoToEntity(question,questionDto));

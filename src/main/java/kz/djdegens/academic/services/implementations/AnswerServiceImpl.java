@@ -36,7 +36,10 @@ public class AnswerServiceImpl implements AnswerService {
 
     @Override
     public void editAnswer(Long answerId, AnswerDto answerDto) {
-        Answer answer = answerData.findById(answerId);
-        answerData.save(answerMapper.dtoToEntity(answer,answerDto));
+        if(Objects.isNull(answerId)) addAnswer(answerDto);
+        else {
+            Answer answer = answerData.findById(answerId);
+            answerData.save(answerMapper.dtoToEntity(answer,answerDto));
+        }
     }
 }
